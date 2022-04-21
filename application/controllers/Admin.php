@@ -8,7 +8,7 @@ class Admin extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->load->database();
-        $this->load->library('spreadsheet');
+      //  $this->load->library('spreadsheet');
         /* cache control */
         $this->output->set_header('Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
         $this->output->set_header('Pragma: no-cache');
@@ -21,6 +21,7 @@ class Admin extends CI_Controller {
         } else {
             $this->load->view('back/login');
         }
+
     }
 
     /* ------- NEWS CATEGORY Add, Edit, View, Delete ------- */
@@ -4488,6 +4489,253 @@ class Admin extends CI_Controller {
      function test()
      {
 
+     }
+
+     function races($para1="", $para2=""){
+        if (!$this->Crud_model->admin_permission('races')) {
+            redirect(base_url() . 'admin');
+        }
+        if ($para1 == 'do_add') {
+            $data['name'] = $this->input->post('name');
+            $this->db->insert('races', $data);
+            recache();
+        } else if ($para1 == 'edit') {
+            $page_data['category_data'] = $this->db->get_where('races', array(
+                        'race_id' => $para2
+                    ))->result_array();
+            $this->load->view('back/admin/race_edit', $page_data);
+        } elseif ($para1 == "update") {
+            $data['name'] = $this->input->post('name');
+            $this->db->where('race_id', $para2);
+            $this->db->update('races', $data);
+            recache();
+        } elseif ($para1 == 'delete') {
+            if(!demo()){
+                $this->db->where('race_id', $para2);
+                $this->db->delete(['races', 'race_schedule']);
+            }
+          
+        }elseif ($para1 == 'list') {
+            $this->db->order_by('race_id', 'desc');
+            $page_data['all_categories'] = $this->db->get('races')->result_array();
+            $this->load->view('back/admin/race_list', $page_data);
+        } elseif ($para1 == 'add') {
+            $this->load->view('back/admin/race_add');
+        } else {
+        $page_data['page_name'] = "races";
+        $this->load->view('back/index', $page_data);
+        }
+     }
+
+     function race_schedule($para1="", $para2=""){
+        if (!$this->Crud_model->admin_permission('race_schedule')) {
+            redirect(base_url() . 'admin');
+        }
+        if ($para1 == 'do_add') {
+            $data['race_id'] = $this->input->post('race_id');
+            $data['from_date'] = strtotime($this->input->post('from_date'));
+            $data['to_date'] = strtotime($this->input->post('to_date'));
+            $data['year'] = date('Y', strtotime($this->input->post('from_date')));
+            $data['created_by'] = $this->session->userdata('admin_id');
+            $this->db->insert('race_schedule', $data);
+            recache();
+        } else if ($para1 == 'edit') {
+            $page_data['category_data'] = $this->db->get_where('race_schedule', array(
+                        'race_schedule_id' => $para2
+                    ))->result_array();
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+            $this->load->view('back/admin/race_schedule_edit', $page_data);
+        } elseif ($para1 == "update") {
+            $data = [
+                'race_id' => $this->input->post('race_id'),
+                'from_date' => strtotime($this->input->post('from_date')),
+                'to_date' => strtotime($this->input->post('to_date')),
+                'created_by' => $this->session->userdata('admin_id'),
+                'updated_at' => date('Y-m-d h:i:s'),
+                'year' => date('Y', strtotime($this->input->post('from_date')))
+            ]; 
+
+            $this->db->where('race_schedule_id', $para2);
+            $this->db->update('race_schedule', $data);
+            recache();
+        } elseif ($para1 == 'delete') {
+            if(!demo()){
+                $this->db->where('race_schedule_id', $para2);
+                $this->db->delete('race_schedule');
+            }
+          
+        }elseif ($para1 == 'list') {
+
+            $this->db->order_by('race_schedule_id', 'desc');
+            $page_data['all_categories'] = $this->db->get('race_schedule')->result_array();
+            $this->load->view('back/admin/race_schedule_list', $page_data);
+        } elseif ($para1 == 'add') {
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+
+            $this->load->view('back/admin/race_schedule_add', $page_data);
+        } else {
+        $page_data['page_name'] = "race_schedule";
+        $this->load->view('back/index', $page_data);
+        }
+     }
+
+     function race_standings($para1="", $para2=""){
+        if (!$this->Crud_model->admin_permission('race_standings')) {
+            redirect(base_url() . 'admin');
+        }
+        
+        $step = $_GET['step'];
+            
+        if ($para1 == 'do_add') {
+            $data['race_id'] = $this->input->post('race_id');
+            $data['from_date'] = strtotime($this->input->post('from_date'));
+            $data['to_date'] = strtotime($this->input->post('to_date'));
+            $data['year'] = date('Y', strtotime($this->input->post('from_date')));
+            $data['created_by'] = $this->session->userdata('admin_id');
+            $this->db->insert('race_schedule', $data);
+            recache();
+        } else if ($para1 == 'edit') {
+            $page_data['category_data'] = $this->db->get_where('race_schedule', array(
+                        'race_schedule_id' => $para2
+                    ))->result_array();
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+            $this->load->view('back/admin/race_schedule_edit', $page_data);
+        } elseif ($para1 == "update") {
+            $data = [
+                'race_id' => $this->input->post('race_id'),
+                'from_date' => strtotime($this->input->post('from_date')),
+                'to_date' => strtotime($this->input->post('to_date')),
+                'created_by' => $this->session->userdata('admin_id'),
+                'updated_at' => date('Y-m-d h:i:s'),
+                'year' => date('Y', strtotime($this->input->post('from_date')))
+            ]; 
+
+            $this->db->where('race_schedule_id', $para2);
+            $this->db->update('race_schedule', $data);
+            recache();
+        } elseif ($para1 == 'delete') {
+            if(!demo()){
+                $this->db->where('race_schedule_id', $para2);
+                $this->db->delete('race_schedule');
+            }          
+        }elseif ($para1 == 'list') {
+            $race_id = $this->input->get('race_id');
+            $page_data['race_id'] = $race_id;
+            $this->db->order_by('race_stand_id', 'desc');
+            $this->db->where('race_id', $race_id);
+            $page_data['all_categories'] = $this->db->get('race_standings')->result_array();
+            $this->load->view('back/admin/race_standings_list', $page_data);
+        } elseif ($para1 == 'add') {
+            $race_id = $this->input->get('race_id');
+            $page_data['race_id'] = $race_id;
+            $page_data['drivers'] = $this->db->order_by('driver_id','desc')->where('race_id', $race_id)->get('drivers')->result_array();
+            $this->load->view('back/admin/race_standings_add', $page_data);
+        } else{        
+            $page_data['page_name'] = "race_standings";
+            $this->load->view('back/index', $page_data);
+        }
+     }
+
+     function drivers($para1="", $para2=""){
+        if (!$this->Crud_model->admin_permission('drivers')) {
+            redirect(base_url() . 'admin');
+        }
+        if($para1 == 'new'){
+            $page_data['page_name'] = "driver_new";
+            $this->load->view('back/index', $page_data);
+        }
+        elseif($para1 == 'view'){
+            echo "ggg - $para2";
+        }
+        elseif ($para1 == 'do_add') {
+            $data['firstname'] = $this->input->post('first_name');
+            $data['lastname'] = $this->input->post('last_name');
+            $data['team'] = $this->input->post('team');
+            $data['bio'] = $this->input->post('description');
+            $data['residence'] = $this->input->post('residence');
+            $data['dob'] = $this->input->post('date_of_birth');
+            $data['birthplace'] = $this->input->post('birth_place');
+            $data['sponsor'] = $this->input->post('sponsor');
+            $data['car'] = $this->input->post('car');
+            $data['twitter'] = $this->input->post('twitter');
+            $data['height'] = $this->input->post('height');
+            $data['weight'] = $this->input->post('weight');
+            $data['crew_chief'] = $this->input->post('crew_chief');
+            $data['facebook'] = $this->input->post('facebook');
+            $data['instagram'] = $this->input->post('instagram');
+            $data['website'] = $this->input->post('website');
+            $data['created_by'] = $this->session->userdata('admin_id');
+
+           $this->db->insert('drivers', $data);
+                
+            $id = $this->db->insert_id();
+            $pro_img = array();
+            $this->load->library('image_lib');
+            ini_set("memory_limit", "-1");
+            foreach ($_FILES['nimg']['name'] as $i => $row) {
+                if ($_FILES['nimg']['name'][$i] !== '') {
+                    $ib = $i + 1;
+                    $path = $_FILES['nimg']['name'][$i];
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    $img = 'photo_' . $id . '_' . $ib . '.' . $ext;
+                    $img_thumb = 'photo_' . $id . '_' . $ib . '_thumb.' . $ext;
+                    $pro_img[] = array('index' => $i, 'img' => $img, 'thumb' => $img_thumb);
+                    move_uploaded_file($_FILES['nimg']['tmp_name'][$i], 'uploads/photo_image/' . $img);
+
+                    $config1['image_library'] = 'gd2';
+                    $config1['create_thumb'] = TRUE;
+                    $config1['maintain_ratio'] = TRUE;
+                    $config1['width'] = '400';
+                    $config1['height'] = '400';
+                    $config1['source_image'] = 'uploads/photo_image/' . $img;
+
+                    $this->image_lib->initialize($config1);
+                    $this->image_lib->resize();
+                    $this->image_lib->clear();
+                }
+            }
+            $data1['pro_img'] = json_encode($pro_img);
+            $this->db->where('driver_id', $id);
+            $this->db->update('drivers', $data1);
+     
+        recache();
+        } else if ($para1 == 'edit') {
+            $page_data['category_data'] = $this->db->get_where('race_schedule', array(
+                        'race_schedule_id' => $para2
+                    ))->result_array();
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+            $this->load->view('back/admin/race_schedule_edit', $page_data);
+        } elseif ($para1 == "update") {
+            $data = [
+                'race_id' => $this->input->post('race_id'),
+                'from_date' => strtotime($this->input->post('from_date')),
+                'to_date' => strtotime($this->input->post('to_date')),
+                'created_by' => $this->session->userdata('admin_id'),
+                'updated_at' => date('Y-m-d h:i:s'),
+                'year' => date('Y', strtotime($this->input->post('from_date')))
+            ]; 
+
+            $this->db->where('race_schedule_id', $para2);
+            $this->db->update('race_schedule', $data);
+            recache();
+        } elseif ($para1 == 'delete') {
+            if(!demo()){
+                $this->db->where('race_schedule_id', $para2);
+                $this->db->delete('race_schedule');
+            }
+          
+        }elseif ($para1 == 'list') {
+            $this->db->order_by('driver_id', 'desc');
+            $page_data['all_categories'] = $this->db->get('drivers')->result_array();
+            $this->load->view('back/admin/drivers_list', $page_data);
+        } elseif ($para1 == 'add') {
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+
+            $this->load->view('back/admin/race_schedule_add', $page_data);
+        } else {
+        $page_data['page_name'] = "drivers";
+        $this->load->view('back/index', $page_data);
+        }
      }
 
 }

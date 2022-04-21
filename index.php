@@ -144,7 +144,7 @@ if ($error_reporting == 1) {
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = '';
+	$view_folder = 'views';
 
 
 /*

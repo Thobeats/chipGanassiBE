@@ -474,6 +474,7 @@ function get_cat(id) {
             $('#video_share').show('slow');
         }
     }
+    
     function preview(v_link) {
         var site = $('.site').val();
         if (site == 'youtube') {

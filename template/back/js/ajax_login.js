@@ -39,7 +39,6 @@
 					});
 				} else if(type=='form') {
 					//reloadStylesheets();
-					
 			        
 				} else if(type=='delete') {
 					ajax_load(base_url+''+user_type+'/'+module+'/'+list_cont_func,'list','first');
