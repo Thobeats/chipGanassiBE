@@ -4700,23 +4700,57 @@ class Admin extends CI_Controller {
      
         recache();
         } else if ($para1 == 'edit') {
-            $page_data['category_data'] = $this->db->get_where('race_schedule', array(
-                        'race_schedule_id' => $para2
-                    ))->result_array();
-            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
-            $this->load->view('back/admin/race_schedule_edit', $page_data);
+            $_SESSION['driver_details'] = $this->db->get_where('drivers', ['driver_id' => $para2])->row_array();
+           $page_data['page_name'] = "driver_new";
+            $this->load->view('back/index', $page_data);
         } elseif ($para1 == "update") {
-            $data = [
-                'race_id' => $this->input->post('race_id'),
-                'from_date' => strtotime($this->input->post('from_date')),
-                'to_date' => strtotime($this->input->post('to_date')),
-                'created_by' => $this->session->userdata('admin_id'),
-                'updated_at' => date('Y-m-d h:i:s'),
-                'year' => date('Y', strtotime($this->input->post('from_date')))
-            ]; 
+            $data['firstname'] = $this->input->post('first_name');
+            $data['lastname'] = $this->input->post('last_name');
+            $data['team'] = $this->input->post('team');
+            $data['bio'] = $this->input->post('description');
+            $data['residence'] = $this->input->post('residence');
+            $data['dob'] = $this->input->post('date_of_birth');
+            $data['birthplace'] = $this->input->post('birth_place');
+            $data['sponsor'] = $this->input->post('sponsor');
+            $data['car'] = $this->input->post('car');
+            $data['twitter'] = $this->input->post('twitter');
+            $data['height'] = $this->input->post('height');
+            $data['weight'] = $this->input->post('weight');
+            $data['crew_chief'] = $this->input->post('crew_chief');
+            $data['facebook'] = $this->input->post('facebook');
+            $data['instagram'] = $this->input->post('instagram');
+            $data['website'] = $this->input->post('website');
+            $data['created_by'] = $this->session->userdata('admin_id');
 
-            $this->db->where('race_schedule_id', $para2);
-            $this->db->update('race_schedule', $data);
+                
+            $pro_img = array();
+            $this->load->library('image_lib');
+            ini_set("memory_limit", "-1");
+            foreach ($_FILES['nimg']['name'] as $i => $row) {
+                if ($_FILES['nimg']['name'][$i] !== '') {
+                    $ib = $i + 1;
+                    $path = $_FILES['nimg']['name'][$i];
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    $img = 'photo_' . $id . '_' . $ib . '.' . $ext;
+                    $img_thumb = 'photo_' . $id . '_' . $ib . '_thumb.' . $ext;
+                    $pro_img[] = array('index' => $i, 'img' => $img, 'thumb' => $img_thumb);
+                    move_uploaded_file($_FILES['nimg']['tmp_name'][$i], 'uploads/photo_image/' . $img);
+
+                    $config1['image_library'] = 'gd2';
+                    $config1['create_thumb'] = TRUE;
+                    $config1['maintain_ratio'] = TRUE;
+                    $config1['width'] = '400';
+                    $config1['height'] = '400';
+                    $config1['source_image'] = 'uploads/photo_image/' . $img;
+
+                    $this->image_lib->initialize($config1);
+                    $this->image_lib->resize();
+                    $this->image_lib->clear();
+                }
+            }
+            $data['pro_img'] = json_encode($pro_img);
+            $this->db->where('driver_id', $para2);
+            $this->db->update('drivers', $data);
             recache();
         } elseif ($para1 == 'delete') {
             if(!demo()){

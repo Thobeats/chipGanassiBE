@@ -451,9 +451,9 @@ function form_submit(form_id, noty, e) {
                 } else if(form_id == 'blog_video_post_add'){
                     window.location.replace(base_url+"admin/blog_video");
                 }
-                // else if(form_id == 'driver_new'){
-                //     window.location.replace(base_url+"admin/drivers");
-                // } 
+                else if(form_id == 'driver_new'){
+                    window.location.replace(base_url+"admin/drivers");
+                } 
                 else {
                     ajax_load(base_url + '' + user_type + '/' + module + '/' + list_cont_func + '/' + extra, 'list', 'first');
                 }

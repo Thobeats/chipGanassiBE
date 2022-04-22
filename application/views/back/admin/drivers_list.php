@@ -47,8 +47,13 @@
                         <a class="btn btn-primary btn-xs btn-icon icon-lg fa fa-eye add-tooltip" data-toggle="tooltip" data-original-title= '<?= translate('view_driver') ?>'
                             href='<?= base_url() . 'admin/drivers/view/' . $i ?>' target="_blank">
                         </a>
-                        <a class="btn btn-info btn-xs btn-labeled fa fa-wrench" data-toggle="tooltip" 
+                        <!-- <a class="btn btn-info btn-xs btn-labeled fa fa-wrench" data-toggle="tooltip" 
                            onclick="ajax_modal('edit', '<?php echo translate('edit_race_schedule'); ?>', '<?php echo translate('successfully_edited!'); ?>', 'race_schedule_edit', '<?php echo $row['race_schedule_id']; ?>')" 
+                           data-original-title="Edit" data-container="body">
+                               <?php echo translate('edit'); ?>
+                        </a> -->
+                        <a class="btn btn-info btn-xs btn-labeled fa fa-wrench" data-toggle="tooltip" 
+                            href="<?= base_url() . 'admin/drivers/edit/' . $row['driver_id']; ?>" target="_blank"
                            data-original-title="Edit" data-container="body">
                                <?php echo translate('edit'); ?>
                         </a>

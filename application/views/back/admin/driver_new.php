@@ -1,3 +1,18 @@
+<?php
+
+$action = base_url() . 'admin/drivers/do_add/';
+if(isset($_SESSION['driver_details'])){
+    $driver_details = $_SESSION['driver_details'];
+
+    unset($_SESSION['driver_details']);
+
+    $action = base_url() . 'admin/drivers/update/'. $driver_details['driver_id'];
+
+}
+
+
+?>
+
 <style>
     label{
         font-size : 14px;
@@ -9,6 +24,7 @@
     </div>
     <div class="tab-base" >
         <div class="panel">
+    
             <div class="panel-body">
                 <div class="row">
                     <div class="col-lg-12">
@@ -17,7 +33,7 @@
                         <div class="tab-base">
                             <div class="tab-content">
                             <?php
-                                echo form_open(base_url() . 'admin/drivers/do_add/', array(
+                                echo form_open($action, array(
                                     'class' => 'form-horizontal',
                                     'method' => 'post',
                                     'id' => 'driver_new',
@@ -30,7 +46,7 @@
                                         <?php echo translate('first_name'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="first_name" id="first_name" value=''/>
+                                        <input type="text" class="form-control required" name="first_name" id="first_name" value='<?= isset($driver_details) ? $driver_details['firstname'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -39,7 +55,7 @@
                                         <?php echo translate('last_name'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="last_name" id="last_name" value=''/>
+                                        <input type="text" class="form-control required" name="last_name" id="last_name" value='<?= isset($driver_details) ? $driver_details['lastname'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -48,7 +64,7 @@
                                         <?php echo translate('team'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="team" id="team" value=''/>
+                                        <input type="text" class="form-control required" name="team" id="team" value='<?= isset($driver_details) ? $driver_details['team'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -57,7 +73,7 @@
                                         <?php echo translate('car'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="car" id="car" value=''/>
+                                        <input type="text" class="form-control required" name="car" id="car" value='<?= isset($driver_details) ? $driver_details['car'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -66,7 +82,7 @@
                                         <?php echo translate('birth_place'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="birth_place" id="birth_place" value=''/>
+                                        <input type="text" class="form-control required" name="birth_place" id="birth_place" value='<?= isset($driver_details) ? $driver_details['birthplace'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -75,7 +91,7 @@
                                         <?php echo translate('date_of_birth'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="date" class="form-control required" name="date_of_birth" id="date_of_birth" value=''/>
+                                        <input type="date" class="form-control required" name="date_of_birth" id="date_of_birth" value='<?= isset($driver_details) ? $driver_details['dob'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -84,7 +100,7 @@
                                         <?php echo translate('sponsor'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="sponsor" id="sponsor" value=''/>
+                                        <input type="text" class="form-control required" name="sponsor" id="sponsor" value='<?= isset($driver_details) ? $driver_details['sponsor'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -93,7 +109,12 @@
                                         <?php echo translate('weight'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="weight" id="weight" value=''/>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control required" name="weight" id="weight" value='<?= isset($driver_details) ? $driver_details['weight'] : "" ?>'/>
+                                            <span class="input-group-addon">
+                                                <span>KG</span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -102,16 +123,20 @@
                                         <?php echo translate('height'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="height" id="height" value=''/>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control required" name="height" id="height" value='<?= isset($driver_details) ? $driver_details['height'] : "" ?>'/>
+                                            <span class="input-group-addon">
+                                                <span>FT</span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="residence">
                                         <?php echo translate('residence'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control required" name="residence" id="residence" rows="5" value=''></textarea>
+                                        <textarea class="form-control required" name="residence" id="residence" rows="5" value=''><?= isset($driver_details) ? $driver_details['residence'] : "" ?></textarea>
                                     </div>
                                 </div>
 
@@ -120,7 +145,7 @@
                                         <?php echo translate('crew_chief'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="crew_chief" id="crew_chief" value=''/>
+                                        <input type="text" class="form-control required" name="crew_chief" id="crew_chief" value='<?= isset($driver_details) ? $driver_details['crew_chief'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -129,7 +154,7 @@
                                         <?php echo translate('bio'); ?>
                                     </label>
                                     <div class="col-sm-8 abstract">
-                                        <textarea class="summernotes" data-height="300" data-name="description" id="bio" value=''></textarea>
+                                        <textarea class="summernotes" data-height="300" data-name="description" id="bio" value=''><?= isset($driver_details) ? $driver_details['bio'] : "" ?></textarea>
                                     </div>
                                 </div>
 
@@ -139,7 +164,7 @@
                                     </label>
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="website" id="website" value=''/>
+                                            <input type="text" class="form-control" name="website" id="website" value='<?= isset($driver_details) ? $driver_details['website'] : "" ?>'/>
                                             <span class="input-group-addon">
                                                 <span class="fa fa-globe"></span>
                                             </span>
@@ -154,7 +179,7 @@
                                     </label>
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="twitter" id="twitter" value=''/>
+                                            <input type="text" class="form-control" name="twitter" id="twitter" value='<?= isset($driver_details) ? $driver_details['twitter'] : "" ?>'/>
                                             <span class="input-group-addon">
                                                 <span class="fa fa-twitter"></span>
                                             </span>
@@ -168,7 +193,7 @@
                                     </label>
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="facebook" id="facebook" value=''/>
+                                            <input type="text" class="form-control" name="facebook" id="facebook" value='<?= isset($driver_details) ? $driver_details['facebook'] : "" ?>'/>
                                             <span class="input-group-addon">
                                                 <span class="fa fa-facebook"></span>
                                             </span>
@@ -182,7 +207,7 @@
                                     </label>
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" name="instagram" id="instagram" value=''/>
+                                            <input type="text" class="form-control" name="instagram" id="instagram" value='<?= isset($driver_details) ? $driver_details['instagram'] : "" ?>'/>
                                             <span class="input-group-addon">
                                                 <span class="fa fa-instagram"></span>
                                             </span>
@@ -200,7 +225,7 @@
                                                 <div class="col-sm-12">
                                                     <center>
                                                         <div class="col-sm-12" style="padding:10px;">
-                                                            <img class="img-responsive img-border blah"  src="<?php echo base_url(); ?>uploads/others/default_image.png" style="width:100%;"  >
+                                                            <img class="img-responsive img-border blah"  src="<?php echo base_url(); ?>uploads/<?= isset($driver_details) ? "photo_image/" .json_decode($driver_details['pro_img'])[0]->img : "others/default_image.png" ?>" style="width:100%;"  >
                                                         </div>
                                                     </center>
                                                 </div>
