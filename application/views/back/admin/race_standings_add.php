@@ -8,47 +8,20 @@
     ));
     ?>
     <div class="panel-body">
+        <input type="hidden" name="race_id" value="<?= $race_id ?>">
+        <?php 
+            foreach($drivers as $driver):
+        ?>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="demo-hor-1">
-                <?php echo translate('race_name') ?>
+                <?php echo driver_name($driver['driver_id']) ?>
+                <input type="hidden" name="driver_id[]" value="<?= $driver_id ?>">
             </label>
             <div class="col-sm-6">
-                <select name="race_id" id="demo-hor-1" 
-                       class="form-control required">
-                    <?php 
-                        foreach($races as $race):
-                    ?>
-                        <option value="<?= $race['race_id'] ?>"><?= $race['name'] ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <input type="text" placeholder="Enter Points" name="points[]" class="form-control required">
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label" for="demo-hor-1">
-                <?php echo translate('from'); ?>
-            </label>
-            <div class="col-sm-6">
-                <div class="input-group date" id="datetimepicker1">
-                    <input type="text" class="form-control required" name="from_date"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label" for="demo-hor-1">
-                <?php echo translate('to'); ?>
-            </label>
-            <div class="col-sm-6">
-                <div class="input-group date" id="datetimepicker2">
-                    <input type="text" class="form-control required" name="to_date"/>
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </form>
 </div>

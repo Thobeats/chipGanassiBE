@@ -29,7 +29,7 @@
                     <div style="border-bottom: 1px solid #ebebeb;padding: 25px 5px 5px 5px;"
                          class="col-md-12" >
                         <button class="btn btn-primary btn-labeled fa fa-pencil pull-right mar-rgt" 
-                                onclick="ajax_modal('add', '<?php echo translate('update_race_standings'); ?>', '<?php echo translate('successfully_added!'); ?>', 'race_standings_add', '<?= '?race_id=' . $race_id ?>','large')">
+                                onclick="ajax_modal('add', '<?php echo 'Update ' . race_name($race_id) . ' Standings' ?>', '<?php echo translate('successfully_added!'); ?>', 'race_standings_add', '<?= '?race_id=' . $race_id ?>','large')">
                                     <?php echo translate('update_race_standings'); ?>
                         </button>
                     </div>

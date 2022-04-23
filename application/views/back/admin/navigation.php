@@ -329,6 +329,15 @@
                                                 </a>
                                             </li>
                                         <?php
+                                            }if ($this->Crud_model->admin_permission('race_setup')) {
+                                        ?>
+                                            <li <?php if ($page_name == "race_setup") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/race_setup">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('race_setup'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
                                             } if($this->Crud_model->admin_permission('race_standings')) {
                                         ?>
                                             <li <?php if ($page_name == "race_standings") { ?> class="active-link" <?php } ?> >

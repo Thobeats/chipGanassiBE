@@ -4579,6 +4579,66 @@ class Admin extends CI_Controller {
         }
      }
 
+     function race_setup($para1="", $para2=""){
+        if (!$this->Crud_model->admin_permission('race_schedule')) {
+            redirect(base_url() . 'admin');
+        }
+        if ($para1 == 'do_add') {
+            $data = [];
+
+            $drivers = $this->input->post('driver_id');
+
+            foreach($drivers as $driver){
+                $data[] = [
+                    'race_id' =>$this->input->post('race_id'),
+                    'driver_id' => $driver,
+                    'year' => $this->input->post('year'),
+                    'created_by' => $this->session->userdata('admin_id')
+                ];
+            }
+           
+            $this->db->insert_batch('race_setup', $data);
+            recache();
+        } else if ($para1 == 'edit') {
+            $page_data['drivers'] = $this->db->order_by('driver_id', 'desc')->get('drivers')->result_array();
+            $page_data['category_data'] = $this->db->get_where('race_setup', array(
+                        'race_setup_id' => $para2
+                    ))->result_array();
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+            $this->load->view('back/admin/race_setup_edit', $page_data);
+        } elseif ($para1 == "update") {
+            $data = [
+                'race_id' => $this->input->post('race_id'),
+                'driver_id' => $this->input->post('driver_id'),
+                'created_by' => $this->session->userdata('admin_id'),
+                'updated_at' => date('Y-m-d h:i:s'),
+                'year' => $this->input->post('year')
+            ]; 
+
+            $this->db->where('race_setup_id', $para2);
+            $this->db->update('race_setup', $data);
+            recache();
+        } elseif ($para1 == 'delete') {
+            if(!demo()){
+                $this->db->where('race_schedule_id', $para2);
+                $this->db->delete('race_schedule');
+            }
+          
+        }elseif ($para1 == 'list') {
+
+            $this->db->order_by('race_setup_id desc ,year desc');
+            $page_data['all_categories'] = $this->db->get('race_setup')->result_array();
+            $this->load->view('back/admin/race_setup_list', $page_data);
+        } elseif ($para1 == 'add') {
+            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
+            $page_data['drivers'] = $this->db->order_by('driver_id', 'desc')->get('drivers')->result_array();
+            $this->load->view('back/admin/race_setup_add', $page_data);
+        } else {
+        $page_data['page_name'] = "race_setup";
+        $this->load->view('back/index', $page_data);
+        }
+     }
+
      function race_standings($para1="", $para2=""){
         if (!$this->Crud_model->admin_permission('race_standings')) {
             redirect(base_url() . 'admin');
@@ -4601,15 +4661,19 @@ class Admin extends CI_Controller {
             $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
             $this->load->view('back/admin/race_schedule_edit', $page_data);
         } elseif ($para1 == "update") {
-            $data = [
-                'race_id' => $this->input->post('race_id'),
-                'from_date' => strtotime($this->input->post('from_date')),
-                'to_date' => strtotime($this->input->post('to_date')),
-                'created_by' => $this->session->userdata('admin_id'),
-                'updated_at' => date('Y-m-d h:i:s'),
-                'year' => date('Y', strtotime($this->input->post('from_date')))
-            ]; 
+            $data = [] ;
 
+            $drivers = $this->input->post('driver_id');
+            $points = $this->input->post('points');
+            foreach($drivers as $index => $driver){
+                $data[] = [
+                    'race_id' => $this->input->post('race_id'),
+                    'driver' => $driver,
+                    'points' => $points[$index],
+                    'updated_by' => $this->session->userdata('admin_id')
+                ];
+            }
+                       
             $this->db->where('race_schedule_id', $para2);
             $this->db->update('race_schedule', $data);
             recache();
@@ -4628,7 +4692,7 @@ class Admin extends CI_Controller {
         } elseif ($para1 == 'add') {
             $race_id = $this->input->get('race_id');
             $page_data['race_id'] = $race_id;
-            $page_data['drivers'] = $this->db->order_by('driver_id','desc')->where('race_id', $race_id)->get('drivers')->result_array();
+            $page_data['drivers'] = $this->db->order_by('driver_id','desc')->where('race_id', $race_id)->get('race_setup')->result_array();
             $this->load->view('back/admin/race_standings_add', $page_data);
         } else{        
             $page_data['page_name'] = "race_standings";
