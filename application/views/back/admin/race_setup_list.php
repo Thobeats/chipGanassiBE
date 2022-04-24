@@ -6,7 +6,7 @@
                 <th data-align="center"><?php echo translate('no'); ?></th>
                 <th data-align="center"><?php echo translate('race'); ?></th>
                 <th data-align="center"><?php echo translate('drivers'); ?></th>
-                <th data-align="center"><?php echo translate('year'); ?></th>
+                <th data-align="center"><?php echo translate('season'); ?></th>
                 <th data-align="center"><?php echo translate('created_at'); ?></th>
                 <th data-align="center"><?php echo translate('updated_at'); ?></th>
                 <th data-align="center"><?php echo translate('created_by'); ?></th>
@@ -28,10 +28,10 @@
                         <?php $rid = $row['race_id']; echo race_name($rid); ?>
                     </td>
                     <td>
-                        <?php $did = $row['driver_id']; echo driver_name($did); ?>
+                        <?php $did = $row['driver']; echo driver_name($did); ?>
                     </td>
                     <td>
-                        <?php echo $row['year'] ?>
+                        <?php echo $row['season'] ?>
                     </td>
                     <td>
                         <?php echo date('d-m-Y', strtotime($row['created_at'])); ?>
@@ -40,16 +40,16 @@
                         <?php echo $row['updated_at'] != null ? date('d-m-Y', strtotime($row['updated_at'])) : "-"; ?>
                     </td>
                     <td>
-                        <?php echo admin_name($row['created_by']) ?>
+                        <?php echo admin_name($row['updated_by']) ?>
                     </td>
                     <td class="text-right">
                         <a class="btn btn-info btn-xs btn-labeled fa fa-wrench" data-toggle="tooltip" 
-                           onclick="ajax_modal('edit', '<?php echo translate('edit_race_setup'); ?>', '<?php echo translate('successfully_edited!'); ?>', 'race_setup_edit', '<?php echo $row['race_setup_id']; ?>')" 
+                           onclick="ajax_modal('edit', '<?php echo translate('edit_race_setup'); ?>', '<?php echo translate('successfully_edited!'); ?>', 'race_setup_edit', '<?php echo $row['race_stand_id']; ?>')" 
                            data-original-title="Edit" data-container="body">
                                <?php echo translate('edit'); ?>
                         </a>
                         <a class="btn btn-danger btn-xs btn-labeled fa fa-trash" data-toggle="tooltip"
-                           onclick="delete_confirm('<?php echo $row['race_setup_id']; ?>', '<?php echo translate('really_want_to_delete_this?'); ?>')"  
+                           onclick="delete_confirm('<?php echo $row['race_stand_id']; ?>', '<?php echo translate('really_want_to_delete_this?'); ?>')"  
                            data-original-title="Delete" data-container="body">
                                <?php echo translate('delete'); ?>
                         </a>

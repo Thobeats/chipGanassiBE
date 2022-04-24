@@ -3,7 +3,7 @@ foreach ($category_data as $row) {
     ?>
     <div class="tab-pane fade active in" id="edit">
         <?php
-        echo form_open(base_url() . 'admin/race_setup/update/' . $row['race_setup_id'], array(
+        echo form_open(base_url() . 'admin/race_setup/update/' . $row['race_stand_id'], array(
             'class' => 'form-horizontal',
             'method' => 'post',
             'id' => 'race_setup_edit',
@@ -46,7 +46,7 @@ foreach ($category_data as $row) {
                 <?php echo translate('year'); ?>
             </label>
             <div class="col-sm-6">
-               <input class="form-control required" name="year" type="text" value="<?= $row['year'] ?>">
+               <input class="form-control required" name="year" type="text" value="<?= $row['season'] ?>">
             </div>
         </div> 
     </div>

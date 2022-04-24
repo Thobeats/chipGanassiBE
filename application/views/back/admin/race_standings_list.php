@@ -6,9 +6,10 @@
                 <th data-align="center"><?php echo translate('position'); ?></th>
                 <th data-align="center"><?php echo translate('driver'); ?></th>
                 <th data-align="center"><?php echo translate('points'); ?></th>
+                <th data-align="center"><?php echo translate('season'); ?></th>
                 <th data-align="center"><?php echo translate('updated_at'); ?></th>
                 <th data-align="center"><?php echo translate('updated_by'); ?></th>
-                <th data-align="center"><?php echo translate('options'); ?></th>
+                <!-- <th data-align="center"><?php echo translate('options'); ?></th> -->
             </tr>
         </thead>
 
@@ -23,19 +24,23 @@
                         <?php echo $i; ?>
                     </td>
                     <td>
-                        <?php $rid = $row['race_id']; echo race_name($rid); ?>
+                        <?php $rid = $row['driver']; echo driver_name($rid); ?>
                     </td>
                     <td>
-                        <?php echo date('d-m-Y', $row['from_date']); ?>
+                        <?php echo  $row['points'] ?>
                     </td>
                     <td>
-                        <?php echo date('d-m-Y', $row['to_date']); ?>
+                        <?php echo $row['season'] ?>
                     </td>
                     <td>
-                        <?php echo $row['year'] ?>
+                        <?php echo  $row['updated_at'] ?>
                     </td>
+                    <td>
+                    <?php echo  admin_name($row['updated_by']) ?>
+                    </td>
+             
                                       
-                    <td class="text-right">
+                    <!-- <td class="text-right">
                         <a class="btn btn-info btn-xs btn-labeled fa fa-wrench" data-toggle="tooltip" 
                            onclick="ajax_modal('edit', '<?php echo translate('edit_race_schedule'); ?>', '<?php echo translate('successfully_edited!'); ?>', 'race_schedule_edit', '<?php echo $row['race_schedule_id']; ?>')" 
                            data-original-title="Edit" data-container="body">
@@ -46,7 +51,7 @@
                            data-original-title="Delete" data-container="body">
                                <?php echo translate('delete'); ?>
                         </a>
-                    </td>
+                    </td> -->
                 </tr>
                 <?php
             }

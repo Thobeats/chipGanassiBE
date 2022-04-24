@@ -3,7 +3,6 @@
 
      $step = $_GET['step'];
      $race_id = $this->input->get('race_id') ? $this->input->get('race_id') : $races[0]['race_id'];
-
 ?>
 
 <div id="content-container">
@@ -16,6 +15,7 @@
             <div class="panel-body">
                 <div class="tab-content" > 
                     <ul class="nav nav-pills" style="background-color : whitesmoke;"> 
+
                         <?php 
                             foreach($races as $index => $race):
                         ?>

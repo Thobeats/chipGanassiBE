@@ -2275,6 +2275,8 @@ class Admin extends CI_Controller {
                     'password' => sha1($this->input->post('password'))
                 ));
                 if ($login_data->num_rows() > 0) {
+                    $get_season = $this->db->get_where('season', ['status' => 'active']) ? $this->db->get_where('season', ['status' => 'active'])->row()->season : "2021/22";       
+                    $this->session->set_userdata('season', $get_season);
                     foreach ($login_data->result_array() as $row) {
                         $this->session->set_userdata('login', 'yes');
                         $this->session->set_userdata('admin_login', 'yes');
@@ -4585,49 +4587,49 @@ class Admin extends CI_Controller {
         }
         if ($para1 == 'do_add') {
             $data = [];
-
+            $race_id = $this->input->post('race_id');
             $drivers = $this->input->post('driver_id');
 
             foreach($drivers as $driver){
                 $data[] = [
-                    'race_id' =>$this->input->post('race_id'),
-                    'driver_id' => $driver,
-                    'year' => $this->input->post('year'),
-                    'created_by' => $this->session->userdata('admin_id')
+                    'race_id' => $race_id,
+                    'driver' => $driver,
+                    'points' => "0",
+                    'season' => $this->session->userdata('season'),
+                    'updated_by' => $this->session->userdata('admin_id')
                 ];
             }
            
-            $this->db->insert_batch('race_setup', $data);
+            $this->db->insert_batch('race_standings', $data);
             recache();
         } else if ($para1 == 'edit') {
             $page_data['drivers'] = $this->db->order_by('driver_id', 'desc')->get('drivers')->result_array();
-            $page_data['category_data'] = $this->db->get_where('race_setup', array(
-                        'race_setup_id' => $para2
+            $page_data['category_data'] = $this->db->get_where('race_standings', array(
+                        'race_stand_id' => $para2
                     ))->result_array();
             $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
             $this->load->view('back/admin/race_setup_edit', $page_data);
         } elseif ($para1 == "update") {
             $data = [
                 'race_id' => $this->input->post('race_id'),
-                'driver_id' => $this->input->post('driver_id'),
-                'created_by' => $this->session->userdata('admin_id'),
+                'driver' => $this->input->post('driver_id'),
+                'updated_by' => $this->session->userdata('admin_id'),
                 'updated_at' => date('Y-m-d h:i:s'),
-                'year' => $this->input->post('year')
+                'season' => $this->input->post('year')
             ]; 
 
-            $this->db->where('race_setup_id', $para2);
-            $this->db->update('race_setup', $data);
+            $this->db->where('race_stand_id', $para2);
+            $this->db->update('race_standings', $data);
             recache();
         } elseif ($para1 == 'delete') {
             if(!demo()){
-                $this->db->where('race_schedule_id', $para2);
-                $this->db->delete('race_schedule');
+                $this->db->where('race_stand_id', $para2);
+                $this->db->delete('race_standings');            
             }
           
         }elseif ($para1 == 'list') {
-
-            $this->db->order_by('race_setup_id desc ,year desc');
-            $page_data['all_categories'] = $this->db->get('race_setup')->result_array();
+            $this->db->order_by('race_stand_id desc,season desc');
+            $page_data['all_categories'] = $this->db->get('race_standings')->result_array();
             $this->load->view('back/admin/race_setup_list', $page_data);
         } elseif ($para1 == 'add') {
             $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
@@ -4644,55 +4646,41 @@ class Admin extends CI_Controller {
             redirect(base_url() . 'admin');
         }
         
-        $step = $_GET['step'];
-            
-        if ($para1 == 'do_add') {
-            $data['race_id'] = $this->input->post('race_id');
-            $data['from_date'] = strtotime($this->input->post('from_date'));
-            $data['to_date'] = strtotime($this->input->post('to_date'));
-            $data['year'] = date('Y', strtotime($this->input->post('from_date')));
-            $data['created_by'] = $this->session->userdata('admin_id');
-            $this->db->insert('race_schedule', $data);
-            recache();
-        } else if ($para1 == 'edit') {
-            $page_data['category_data'] = $this->db->get_where('race_schedule', array(
-                        'race_schedule_id' => $para2
-                    ))->result_array();
-            $page_data['races'] = $this->db->order_by('race_id','desc')->get('races')->result_array();
-            $this->load->view('back/admin/race_schedule_edit', $page_data);
-        } elseif ($para1 == "update") {
+        if ($para1 == "update") {
+            $race_id = $this->input->post('race_id');
+            $check = $this->db->get_where('racing_standings', ['race_id'=>$race_id, 'season'=> $this->session->userdata('season')]);
+    
             $data = [] ;
 
             $drivers = $this->input->post('driver_id');
             $points = $this->input->post('points');
+            $race_stand_id = $this->input->post('race_stand_id');
             foreach($drivers as $index => $driver){
                 $data[] = [
-                    'race_id' => $this->input->post('race_id'),
+                    'race_stand_id' => $race_stand_id[$index],
+                    'race_id' => $race_id,
                     'driver' => $driver,
                     'points' => $points[$index],
+                    'season' => $this->session->userdata('season'),
                     'updated_by' => $this->session->userdata('admin_id')
                 ];
             }
-                       
-            $this->db->where('race_schedule_id', $para2);
-            $this->db->update('race_schedule', $data);
+
+            $this->db->update_batch('race_standings', $data, 'race_stand_id');
+                 
+            
             recache();
-        } elseif ($para1 == 'delete') {
-            if(!demo()){
-                $this->db->where('race_schedule_id', $para2);
-                $this->db->delete('race_schedule');
-            }          
-        }elseif ($para1 == 'list') {
+        } if ($para1 == 'list') {
             $race_id = $this->input->get('race_id');
             $page_data['race_id'] = $race_id;
-            $this->db->order_by('race_stand_id', 'desc');
+            $this->db->order_by('points', 'desc');
             $this->db->where('race_id', $race_id);
             $page_data['all_categories'] = $this->db->get('race_standings')->result_array();
             $this->load->view('back/admin/race_standings_list', $page_data);
         } elseif ($para1 == 'add') {
             $race_id = $this->input->get('race_id');
             $page_data['race_id'] = $race_id;
-            $page_data['drivers'] = $this->db->order_by('driver_id','desc')->where('race_id', $race_id)->get('race_setup')->result_array();
+            $page_data['drivers'] = $this->db->order_by('driver','desc')->where(['race_id' => $race_id, 'season' => $this->session->userdata('season')])->get('race_standings')->result_array();
             $this->load->view('back/admin/race_standings_add', $page_data);
         } else{        
             $page_data['page_name'] = "race_standings";

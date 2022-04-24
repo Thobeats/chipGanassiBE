@@ -40,10 +40,10 @@
         </div>    
         <div class="form-group">
             <label class="col-sm-4 control-label" for="demo-hor-1">
-                <?php echo translate('year'); ?>
+                <?php echo translate('season'); ?>
             </label>
             <div class="col-sm-6">
-               <input class="form-control" name="year" type="text" >
+               <input class="form-control" name="year" type="text" value="<?= $this->session->userdata('season') ?>" readonly>
             </div>
         </div>     
     </div>

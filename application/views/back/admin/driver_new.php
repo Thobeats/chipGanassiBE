@@ -7,6 +7,7 @@ if(isset($_SESSION['driver_details'])){
     unset($_SESSION['driver_details']);
 
     $action = base_url() . 'admin/drivers/update/'. $driver_details['driver_id'];
+    $form_title = translate('update_driver');
 
 }
 
@@ -20,7 +21,7 @@ if(isset($_SESSION['driver_details'])){
 </style>
 <div id="content-container">
     <div id="page-title" style="border-bottom: 1px solid lightgrey;">
-        <h1 class="page-header text-overflow" ><?php echo translate('new_driver'); ?></h1>
+        <h1 class="page-header text-overflow" ><?php echo isset($form_title) ? $form_title : translate('new_driver'); ?></h1>
     </div>
     <div class="tab-base" >
         <div class="panel">
