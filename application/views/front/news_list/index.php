@@ -2,6 +2,7 @@
 <?php
 $listing_news_data = json_decode($this->Crud_model->get_settings_value('ui_settings', 'listing_news', 'value'), true);
 ?>
+
 <input type="hidden" value="<?php echo $news_category; ?>" id="cat" />
 <input type="hidden" value="<?php echo $news_sub_category; ?>" id="subcat" />
 <input type="hidden" value="<?php if (isset($start_date)) { echo $start_date; } ?>" id="st_date" />
