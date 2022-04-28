@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `heroku_77923308437b88f`
+-- Database: `heroku_8ec114e233ac83e`
 --
 
 -- --------------------------------------------------------
@@ -2902,7 +2902,7 @@ CREATE TABLE `race_standings` (
   `race_id` varchar(200) NOT NULL,
   `season` varchar(200) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` date NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_by` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
