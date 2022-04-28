@@ -1,5 +1,8 @@
 {
     "name": "dayisi/cgbe",
     "type": "project",
-    "require": {}
+    "require": {
+        "php": "^7.4",
+        "codeigniter/framework": "^3.1"
+    }
 }
