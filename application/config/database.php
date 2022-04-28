@@ -64,12 +64,13 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'super_admin',
-	'password' => 'ZELY[Vdhw5U5y(Zs',
+	//'hostname' => 'localhost' super_admin,
+	"hostname" => "eu-cdbr-west-01.cleardb.com",
+	'username' => 'bd1a69e060a62b',
+	'password' => '1ed6dab9',
 	// 'username' => 'root',
 	// 'password' => '',
-	'database' => 'newspaper',
+	'database' => 'heroku_77923308437b88f',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
