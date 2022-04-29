@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.3
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Apr 26, 2022 at 08:47 PM
--- Server version: 10.4.22-MariaDB
--- PHP Version: 7.4.28
+-- Host: mysql-77394-db.mysql-77394:18719
+-- Generation Time: Apr 29, 2022 at 07:25 PM
+-- Server version: 8.0.26
+-- PHP Version: 7.2.34
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `newspaper`
+-- Database: `cgrwebsql`
 --
 
 -- --------------------------------------------------------
@@ -28,12 +29,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `admin_id` int(11) NOT NULL,
-  `name` longtext DEFAULT NULL,
-  `phone` longtext DEFAULT NULL,
-  `address` longtext DEFAULT NULL,
-  `email` longtext DEFAULT NULL,
-  `password` longtext DEFAULT NULL,
+  `admin_id` int NOT NULL,
+  `name` longtext,
+  `phone` longtext,
+  `address` longtext,
+  `email` longtext,
+  `password` longtext,
   `role` varchar(10) DEFAULT NULL,
   `timestamp` varchar(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -56,22 +57,22 @@ INSERT INTO `admin` (`admin_id`, `name`, `phone`, `address`, `email`, `password`
 --
 
 CREATE TABLE `advertisement` (
-  `advertisement_id` int(11) NOT NULL,
+  `advertisement_id` int NOT NULL,
   `title` varchar(50) NOT NULL,
   `type` varchar(30) NOT NULL,
   `position` varchar(100) NOT NULL,
-  `page_id` int(11) NOT NULL,
+  `page_id` int NOT NULL,
   `format` varchar(100) NOT NULL,
   `size` varchar(100) NOT NULL,
-  `package` longtext DEFAULT NULL,
+  `package` longtext,
   `status` varchar(20) DEFAULT NULL,
   `availability` varchar(20) NOT NULL DEFAULT 'available',
   `google_adsense` varchar(20) DEFAULT NULL,
-  `google_adsense_code` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `google_adsense_code` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `default_post` longtext NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
   `user_status` varchar(20) DEFAULT NULL,
-  `post_details` longtext DEFAULT NULL,
+  `post_details` longtext,
   `approval` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -135,19 +136,19 @@ INSERT INTO `advertisement` (`advertisement_id`, `title`, `type`, `position`, `p
 --
 
 CREATE TABLE `advertisement_payment` (
-  `advertisement_payment_id` int(11) NOT NULL,
-  `advertisement_id` int(11) NOT NULL,
-  `package_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `advertisement_payment_id` int NOT NULL,
+  `advertisement_id` int NOT NULL,
+  `package_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `payment_type` varchar(30) NOT NULL,
   `payment_status` varchar(20) NOT NULL,
   `payment_details` longtext NOT NULL,
   `amount` varchar(20) NOT NULL,
-  `purchase_datetime` int(11) NOT NULL,
+  `purchase_datetime` int NOT NULL,
   `payment_code` varchar(50) DEFAULT NULL,
-  `payment_timestamp` int(11) DEFAULT NULL,
+  `payment_timestamp` int DEFAULT NULL,
   `expire` varchar(20) DEFAULT NULL,
-  `expire_timestamp` int(11) DEFAULT NULL
+  `expire_timestamp` int DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -174,7 +175,7 @@ INSERT INTO `advertisement_payment` (`advertisement_payment_id`, `advertisement_
 --
 
 CREATE TABLE `ad_page` (
-  `ad_page_id` int(11) NOT NULL,
+  `ad_page_id` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `home_function` varchar(100) NOT NULL
@@ -204,7 +205,7 @@ INSERT INTO `ad_page` (`ad_page_id`, `name`, `status`, `home_function`) VALUES
 --
 
 CREATE TABLE `audio` (
-  `audio_id` int(11) NOT NULL,
+  `audio_id` int NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `audio_src` varchar(100) DEFAULT NULL,
   `description` longtext NOT NULL
@@ -226,23 +227,23 @@ INSERT INTO `audio` (`audio_id`, `name`, `audio_src`, `description`) VALUES
 --
 
 CREATE TABLE `blog` (
-  `blog_id` int(11) NOT NULL,
+  `blog_id` int NOT NULL,
   `blog_uploader_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `blog_uploader_id` int(11) DEFAULT NULL,
-  `edited_by` longtext DEFAULT NULL,
+  `blog_uploader_id` int DEFAULT NULL,
+  `edited_by` longtext,
   `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `summary` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `summary` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `date` varchar(200) DEFAULT NULL,
-  `blog_category_id` int(11) DEFAULT NULL,
-  `blog_sub_category_id` int(11) DEFAULT NULL,
-  `view_count` int(11) NOT NULL,
-  `timestamp` int(11) DEFAULT NULL,
+  `blog_category_id` int DEFAULT NULL,
+  `blog_sub_category_id` int DEFAULT NULL,
+  `view_count` int NOT NULL,
+  `timestamp` int DEFAULT NULL,
   `status` varchar(110) DEFAULT NULL,
   `hide_status` varchar(20) NOT NULL,
-  `publish_timestamp` int(11) DEFAULT NULL,
-  `tag` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `img_features` longtext DEFAULT NULL
+  `publish_timestamp` int DEFAULT NULL,
+  `tag` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `img_features` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -275,10 +276,10 @@ INSERT INTO `blog` (`blog_id`, `blog_uploader_type`, `blog_uploader_id`, `edited
 --
 
 CREATE TABLE `blogs_social_links` (
-  `blogs_social_links_id` int(11) NOT NULL,
+  `blogs_social_links_id` int NOT NULL,
   `type` longtext NOT NULL,
   `value` longtext NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `blogs_social_links`
@@ -296,9 +297,9 @@ INSERT INTO `blogs_social_links` (`blogs_social_links_id`, `type`, `value`) VALU
 --
 
 CREATE TABLE `blog_category` (
-  `blog_category_id` int(11) NOT NULL,
-  `name` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `blog_category_id` int NOT NULL,
+  `name` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `blog_category`
@@ -320,17 +321,17 @@ INSERT INTO `blog_category` (`blog_category_id`, `name`) VALUES
 --
 
 CREATE TABLE `blog_photo` (
-  `blog_photo_id` int(11) NOT NULL,
+  `blog_photo_id` int NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` longtext NOT NULL,
   `status` varchar(20) NOT NULL,
   `hide_status` varchar(20) NOT NULL,
-  `img_features` longtext DEFAULT NULL,
+  `img_features` longtext,
   `timestamp` varchar(50) DEFAULT NULL,
   `blog_photo_uploader_type` varchar(10) DEFAULT NULL,
-  `blog_photo_uploader_id` int(11) NOT NULL,
+  `blog_photo_uploader_id` int NOT NULL,
   `edited_by` longtext NOT NULL,
-  `view_count` int(11) DEFAULT NULL
+  `view_count` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -356,10 +357,10 @@ INSERT INTO `blog_photo` (`blog_photo_id`, `title`, `description`, `status`, `hi
 --
 
 CREATE TABLE `blog_sub_category` (
-  `blog_sub_category_id` int(11) NOT NULL,
-  `name` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `parent_category_id` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `blog_sub_category_id` int NOT NULL,
+  `name` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `parent_category_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `blog_sub_category`
@@ -391,7 +392,7 @@ INSERT INTO `blog_sub_category` (`blog_sub_category_id`, `name`, `parent_categor
 --
 
 CREATE TABLE `blog_video` (
-  `blog_video_id` int(11) NOT NULL,
+  `blog_video_id` int NOT NULL,
   `title` varchar(255) DEFAULT NULL,
   `description` longtext NOT NULL,
   `type` varchar(10) NOT NULL,
@@ -404,9 +405,9 @@ CREATE TABLE `blog_video` (
   `hide_status` varchar(20) NOT NULL,
   `timestamp` varchar(50) NOT NULL,
   `blog_video_uploader_type` varchar(10) DEFAULT NULL,
-  `blog_video_uploader_id` int(11) NOT NULL,
+  `blog_video_uploader_id` int NOT NULL,
   `edited_by` longtext NOT NULL,
-  `view_count` int(11) DEFAULT NULL
+  `view_count` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -436,9 +437,9 @@ INSERT INTO `blog_video` (`blog_video_id`, `title`, `description`, `type`, `from
 --
 
 CREATE TABLE `business_settings` (
-  `business_settings_id` int(11) NOT NULL,
+  `business_settings_id` int NOT NULL,
   `type` longtext NOT NULL,
-  `value` longtext DEFAULT NULL
+  `value` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -469,7 +470,7 @@ INSERT INTO `business_settings` (`business_settings_id`, `type`, `value`) VALUES
 CREATE TABLE `ci_sessions` (
   `id` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `timestamp` int UNSIGNED NOT NULL DEFAULT '0',
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -492,15 +493,15 @@ INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
 --
 
 CREATE TABLE `contact_message` (
-  `contact_message_id` int(11) NOT NULL,
+  `contact_message_id` int NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `subject` varchar(1000) DEFAULT NULL,
   `email` varchar(200) DEFAULT NULL,
-  `message` longtext DEFAULT NULL,
+  `message` longtext,
   `timestamp` varchar(20) DEFAULT NULL,
   `view` varchar(10) DEFAULT NULL,
-  `reply` longtext DEFAULT NULL,
-  `other` longtext DEFAULT NULL
+  `reply` longtext,
+  `other` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -510,14 +511,14 @@ CREATE TABLE `contact_message` (
 --
 
 CREATE TABLE `currency_settings` (
-  `currency_settings_id` int(11) NOT NULL,
+  `currency_settings_id` int NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `symbol` varchar(255) DEFAULT NULL,
   `exchange_rate` varchar(255) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   `code` varchar(20) DEFAULT NULL,
   `exchange_rate_def` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `currency_settings`
@@ -556,10 +557,10 @@ INSERT INTO `currency_settings` (`currency_settings_id`, `name`, `symbol`, `exch
 --
 
 CREATE TABLE `drivers` (
-  `driver_id` int(11) NOT NULL,
+  `driver_id` int NOT NULL,
   `firstname` varchar(300) NOT NULL,
   `lastname` varchar(300) NOT NULL,
-  `bio` longtext DEFAULT NULL,
+  `bio` longtext,
   `dob` date DEFAULT NULL,
   `birthplace` varchar(200) DEFAULT NULL,
   `car` varchar(200) DEFAULT NULL,
@@ -570,21 +571,21 @@ CREATE TABLE `drivers` (
   `crew_chief` varchar(200) DEFAULT NULL,
   `website` varchar(200) DEFAULT NULL,
   `residence` varchar(200) DEFAULT NULL,
-  `pro_img` longtext DEFAULT NULL,
+  `pro_img` longtext,
   `twitter` varchar(200) DEFAULT NULL,
   `facebook` varchar(200) DEFAULT NULL,
   `instagram` varchar(200) DEFAULT NULL,
   `created_by` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `drivers`
 --
 
 INSERT INTO `drivers` (`driver_id`, `firstname`, `lastname`, `bio`, `dob`, `birthplace`, `car`, `team`, `sponsor`, `height`, `weight`, `crew_chief`, `website`, `residence`, `pro_img`, `twitter`, `facebook`, `instagram`, `created_by`, `created_at`) VALUES
-(1, 'IYANUOLUWA', 'DAYISI', '<p>Nothing Much</p>', '2022-04-08', 'Lagos', 'range', 'barcelona', 'barcelona air', '9 10\'', '45', 'BEN', '', 'Lagos', '[]', '', '', '', '1', '2022-04-21 17:39:18'),
-(2, 'IYANUOLUWA', 'DAYISI', '<p>asasxas</p>', '2022-04-02', 'Lagos', 'range', 'barcelona', 'barcelona air', '9 10', '45', 'bn', '', 'Lagos', '[{\"index\":0,\"img\":\"photo__1.png\",\"thumb\":\"photo__1_thumb.png\"}]', '', '', '', '1', '2022-04-21 17:41:35');
+(1, 'testfname', 'testlname', '<p>Nothing Much</p>', '2022-04-08', 'Test place', 'range', 'testteam', 'barcelona air', '9 10', '45', 'BEN', '', 'testresidence', '[{\"index\":0,\"img\":\"photo__1.png\",\"thumb\":\"photo__1_thumb.png\"}]', '', '', '', '1', '2022-04-21 17:39:18'),
+(2, 'Test', 'Testlname', '<p>asasxas</p>', '2022-04-02', 'Test Birth Place', 'range', 'Formula1', 'barcelona air', '9 10', '45', 'bn', '', 'Test Birth Place', '[{\"index\":0,\"img\":\"photo__1.png\",\"thumb\":\"photo__1_thumb.png\"}]', '', '', '', '1', '2022-04-21 17:41:35');
 
 -- --------------------------------------------------------
 
@@ -593,7 +594,7 @@ INSERT INTO `drivers` (`driver_id`, `firstname`, `lastname`, `bio`, `dob`, `birt
 --
 
 CREATE TABLE `email_template` (
-  `email_template_id` int(11) NOT NULL,
+  `email_template_id` int NOT NULL,
   `title` longtext NOT NULL,
   `subject` longtext NOT NULL,
   `body` longtext NOT NULL
@@ -616,9 +617,9 @@ INSERT INTO `email_template` (`email_template_id`, `title`, `subject`, `body`) V
 --
 
 CREATE TABLE `general_settings` (
-  `general_settings_id` int(11) NOT NULL,
-  `type` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+  `general_settings_id` int NOT NULL,
+  `type` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `value` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -661,7 +662,7 @@ INSERT INTO `general_settings` (`general_settings_id`, `type`, `value`) VALUES
 (66, 'map', 'ok'),
 (67, 'initial_upload', 'pending'),
 (68, 'post_without_login', NULL),
-(69, 'cron_time', '1650815148'),
+(69, 'cron_time', '1651250136'),
 (70, 'cron_gap', '7200'),
 (71, 'preloader_obj', 'rgba(0,0,0,1)'),
 (72, 'footer_category', '[\"1\",\"2\",\"3\",\"4\"]'),
@@ -681,14 +682,14 @@ INSERT INTO `general_settings` (`general_settings_id`, `type`, `value`) VALUES
 --
 
 CREATE TABLE `language` (
-  `word_id` int(11) NOT NULL,
+  `word_id` int NOT NULL,
   `word` longtext NOT NULL,
-  `english` longtext CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `Bangla` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Spanish` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Arabic` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `French` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `Chinese` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+  `english` longtext CHARACTER SET utf8 COLLATE utf8_bin,
+  `Bangla` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `Spanish` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `Arabic` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `French` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `Chinese` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2336,7 +2337,7 @@ INSERT INTO `language` (`word_id`, `word`, `english`, `Bangla`, `Spanish`, `Arab
 --
 
 CREATE TABLE `language_list` (
-  `language_list_id` int(11) NOT NULL,
+  `language_list_id` int NOT NULL,
   `name` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `db_field` varchar(300) DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL
@@ -2361,8 +2362,8 @@ INSERT INTO `language_list` (`language_list_id`, `name`, `db_field`, `status`) V
 --
 
 CREATE TABLE `logo` (
-  `logo_id` int(11) NOT NULL,
-  `name` longtext DEFAULT NULL
+  `logo_id` int NOT NULL,
+  `name` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2384,29 +2385,29 @@ INSERT INTO `logo` (`logo_id`, `name`) VALUES
 --
 
 CREATE TABLE `news` (
-  `news_id` int(11) NOT NULL,
-  `news_uploader_id` int(11) DEFAULT NULL,
-  `edited_by` longtext DEFAULT NULL,
+  `news_id` int NOT NULL,
+  `news_uploader_id` int DEFAULT NULL,
+  `edited_by` longtext,
   `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `summary` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `summary` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `date` varchar(200) DEFAULT NULL,
-  `news_category_id` int(11) DEFAULT NULL,
-  `news_sub_category_id` int(11) DEFAULT NULL,
-  `view_count` int(11) DEFAULT NULL,
-  `timestamp` int(11) DEFAULT NULL,
+  `news_category_id` int DEFAULT NULL,
+  `news_sub_category_id` int DEFAULT NULL,
+  `view_count` int DEFAULT NULL,
+  `timestamp` int DEFAULT NULL,
   `status` varchar(110) DEFAULT NULL,
   `breaking_news` varchar(20) DEFAULT NULL,
-  `publish_timestamp` int(11) DEFAULT NULL,
-  `tag` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `news_speciality_id` int(11) DEFAULT NULL,
-  `img_features` longtext DEFAULT NULL,
-  `news_reporter_id` int(11) DEFAULT NULL,
-  `serial_3` int(100) DEFAULT 0,
-  `serial_breaking` int(100) DEFAULT 0,
-  `serial_4` int(11) DEFAULT 0,
-  `serial_6` int(11) DEFAULT 0,
-  `serial_7` int(11) DEFAULT 0
+  `publish_timestamp` int DEFAULT NULL,
+  `tag` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `news_speciality_id` int DEFAULT NULL,
+  `img_features` longtext,
+  `news_reporter_id` int DEFAULT NULL,
+  `serial_3` int DEFAULT '0',
+  `serial_breaking` int DEFAULT '0',
+  `serial_4` int DEFAULT '0',
+  `serial_6` int DEFAULT '0',
+  `serial_7` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2476,26 +2477,26 @@ INSERT INTO `news` (`news_id`, `news_uploader_id`, `edited_by`, `title`, `summar
 --
 
 CREATE TABLE `news_archive` (
-  `news_archive_id` int(11) NOT NULL,
-  `news_uploader_id` int(11) NOT NULL,
+  `news_archive_id` int NOT NULL,
+  `news_uploader_id` int NOT NULL,
   `edited_by` longtext NOT NULL,
   `title` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `summary` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `description` longtext CHARACTER SET utf32 COLLATE utf32_unicode_ci NOT NULL,
   `date` varchar(200) NOT NULL,
-  `news_category_id` int(11) NOT NULL,
-  `news_sub_category_id` int(11) NOT NULL,
-  `view_count` int(11) DEFAULT 0,
-  `timestamp` int(11) NOT NULL,
+  `news_category_id` int NOT NULL,
+  `news_sub_category_id` int NOT NULL,
+  `view_count` int DEFAULT '0',
+  `timestamp` int NOT NULL,
   `tag` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `news_speciality_id` int(11) DEFAULT NULL,
-  `news_reporter_id` int(11) NOT NULL,
+  `news_speciality_id` int DEFAULT NULL,
+  `news_reporter_id` int NOT NULL,
   `img_features` longtext NOT NULL,
   `archived_by` longtext NOT NULL,
   `status` varchar(110) NOT NULL,
-  `publish_timestamp` int(11) NOT NULL,
-  `serial` int(100) DEFAULT 0,
-  `serial_breaking` int(100) DEFAULT 0
+  `publish_timestamp` int NOT NULL,
+  `serial` int DEFAULT '0',
+  `serial_breaking` int DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2514,9 +2515,9 @@ INSERT INTO `news_archive` (`news_archive_id`, `news_uploader_id`, `edited_by`, 
 --
 
 CREATE TABLE `news_category` (
-  `news_category_id` int(11) NOT NULL,
-  `name` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `news_category_id` int NOT NULL,
+  `name` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `news_category`
@@ -2539,7 +2540,7 @@ INSERT INTO `news_category` (`news_category_id`, `name`) VALUES
 --
 
 CREATE TABLE `news_reporter` (
-  `news_reporter_id` int(11) NOT NULL,
+  `news_reporter_id` int NOT NULL,
   `name` varchar(200) NOT NULL,
   `designation` varchar(200) NOT NULL,
   `phone` varchar(200) NOT NULL,
@@ -2552,9 +2553,9 @@ CREATE TABLE `news_reporter` (
   `computer_ip` varchar(50) NOT NULL,
   `image` longtext NOT NULL,
   `mothers_name` varchar(50) NOT NULL,
-  `admin_status` int(11) NOT NULL,
+  `admin_status` int NOT NULL,
   `about` longtext NOT NULL,
-  `social_account` longtext DEFAULT NULL
+  `social_account` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2577,7 +2578,7 @@ INSERT INTO `news_reporter` (`news_reporter_id`, `name`, `designation`, `phone`,
 --
 
 CREATE TABLE `news_speciality` (
-  `news_speciality_id` int(11) NOT NULL,
+  `news_speciality_id` int NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2598,10 +2599,10 @@ INSERT INTO `news_speciality` (`news_speciality_id`, `name`) VALUES
 --
 
 CREATE TABLE `news_sub_category` (
-  `news_sub_category_id` int(11) NOT NULL,
-  `name` longtext COLLATE utf8_unicode_ci NOT NULL,
-  `parent_category_id` longtext COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `news_sub_category_id` int NOT NULL,
+  `name` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `parent_category_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `news_sub_category`
@@ -2630,13 +2631,13 @@ INSERT INTO `news_sub_category` (`news_sub_category_id`, `name`, `parent_categor
 --
 
 CREATE TABLE `page` (
-  `page_id` int(11) NOT NULL,
+  `page_id` int NOT NULL,
   `status` varchar(20) DEFAULT NULL,
   `page_name` varchar(100) DEFAULT NULL,
   `parmalink` varchar(100) DEFAULT NULL,
-  `content` longtext DEFAULT NULL,
-  `parts` longtext DEFAULT NULL,
-  `tag` longtext DEFAULT NULL,
+  `content` longtext,
+  `parts` longtext,
+  `tag` longtext,
   `fixed` varchar(10) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -2654,11 +2655,11 @@ INSERT INTO `page` (`page_id`, `status`, `page_name`, `parmalink`, `content`, `p
 --
 
 CREATE TABLE `permission` (
-  `permission_id` int(11) NOT NULL,
+  `permission_id` int NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `codename` varchar(30) DEFAULT NULL,
   `parent_status` varchar(30) DEFAULT NULL,
-  `description` longtext DEFAULT NULL
+  `description` longtext
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -2769,7 +2770,9 @@ INSERT INTO `permission` (`permission_id`, `name`, `codename`, `parent_status`, 
 (110, 'rss', 'rss', 'parent', NULL),
 (111, 'Bulk News Add', 'bulk_news_add', 'parent', NULL),
 (112, 'Currency', 'currency', 'parent', NULL),
-(113, 'FAQ', 'faq', 'parent', NULL);
+(113, 'FAQ', 'faq', 'parent', NULL),
+(114, 'race', 'racing', 'parent', NULL),
+(115, 'drivers', 'drivers', 'parent', NULL);
 
 -- --------------------------------------------------------
 
@@ -2778,11 +2781,11 @@ INSERT INTO `permission` (`permission_id`, `name`, `codename`, `parent_status`, 
 --
 
 CREATE TABLE `photo` (
-  `photo_id` int(11) NOT NULL,
+  `photo_id` int NOT NULL,
   `title` varchar(200) NOT NULL,
   `description` longtext NOT NULL,
   `status` varchar(20) NOT NULL,
-  `img_features` longtext DEFAULT NULL
+  `img_features` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2814,12 +2817,12 @@ INSERT INTO `photo` (`photo_id`, `title`, `description`, `status`, `img_features
 --
 
 CREATE TABLE `poll` (
-  `poll_id` int(11) NOT NULL,
-  `question` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `poll_id` int NOT NULL,
+  `question` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
   `options` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `status` varchar(100) DEFAULT NULL,
-  `uploader` int(11) DEFAULT NULL,
-  `edited_by` longtext DEFAULT NULL,
+  `uploader` int DEFAULT NULL,
+  `edited_by` longtext,
   `ip_count` varchar(255) DEFAULT '[]'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -2839,9 +2842,9 @@ INSERT INTO `poll` (`poll_id`, `question`, `options`, `status`, `uploader`, `edi
 --
 
 CREATE TABLE `races` (
-  `race_id` int(11) NOT NULL,
+  `race_id` int NOT NULL,
   `name` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `races`
@@ -2859,15 +2862,15 @@ INSERT INTO `races` (`race_id`, `name`) VALUES
 --
 
 CREATE TABLE `race_schedule` (
-  `race_schedule_id` int(11) NOT NULL,
+  `race_schedule_id` int NOT NULL,
   `race_id` varchar(300) NOT NULL,
   `from_date` varchar(300) NOT NULL,
   `to_date` varchar(300) NOT NULL,
   `year` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
-  `created_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_by` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `race_schedule`
@@ -2884,10 +2887,17 @@ INSERT INTO `race_schedule` (`race_schedule_id`, `race_id`, `from_date`, `to_dat
 --
 
 CREATE TABLE `race_season` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `season` varchar(200) NOT NULL,
   `status` varchar(200) NOT NULL DEFAULT 'inactive'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `race_season`
+--
+
+INSERT INTO `race_season` (`id`, `season`, `status`) VALUES
+(1, '2021/22', 'active');
 
 -- --------------------------------------------------------
 
@@ -2896,26 +2906,26 @@ CREATE TABLE `race_season` (
 --
 
 CREATE TABLE `race_standings` (
-  `race_stand_id` int(11) NOT NULL,
+  `race_stand_id` int NOT NULL,
   `driver` varchar(220) NOT NULL,
   `points` varchar(300) DEFAULT NULL,
   `race_id` varchar(200) NOT NULL,
   `season` varchar(200) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_by` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `race_standings`
 --
 
 INSERT INTO `race_standings` (`race_stand_id`, `driver`, `points`, `race_id`, `season`, `created_at`, `updated_at`, `updated_by`) VALUES
-(3, '2', '77', '4', '2021/22', '2022-04-24 16:57:36', '2022-04-24', '1'),
-(4, '1', '69', '4', '2021/22', '2022-04-24 16:57:36', '2022-04-24', '1'),
-(5, '2', '60', '3', '2021/22', '2022-04-24 17:45:04', '2022-04-24', '1'),
-(6, '2', '0', '2', '2021/22', '2022-04-24 17:45:57', '2022-04-24', '1'),
-(7, '1', '50', '3', '2021/22', '2022-04-24 18:26:11', '2022-04-24', '1');
+(3, '2', '77', '4', '2021/22', '2022-04-24 16:57:36', '2022-04-24 00:00:00', '1'),
+(4, '1', '69', '4', '2021/22', '2022-04-24 16:57:36', '2022-04-24 00:00:00', '1'),
+(5, '2', '60', '3', '2021/22', '2022-04-24 17:45:04', '2022-04-24 00:00:00', '1'),
+(6, '2', '0', '2', '2021/22', '2022-04-24 17:45:57', '2022-04-24 00:00:00', '1'),
+(7, '1', '50', '3', '2021/22', '2022-04-24 18:26:11', '2022-04-24 00:00:00', '1');
 
 -- --------------------------------------------------------
 
@@ -2924,10 +2934,10 @@ INSERT INTO `race_standings` (`race_stand_id`, `driver`, `points`, `race_id`, `s
 --
 
 CREATE TABLE `role` (
-  `role_id` int(11) NOT NULL,
+  `role_id` int NOT NULL,
   `name` varchar(100) DEFAULT NULL,
-  `permission` longtext DEFAULT NULL,
-  `description` longtext DEFAULT NULL
+  `permission` longtext,
+  `description` longtext
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -2949,10 +2959,10 @@ INSERT INTO `role` (`role_id`, `name`, `permission`, `description`) VALUES
 --
 
 CREATE TABLE `social_links` (
-  `social_links_id` int(11) NOT NULL,
-  `type` longtext COLLATE utf8_unicode_ci DEFAULT NULL,
-  `value` longtext COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `social_links_id` int NOT NULL,
+  `type` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `value` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `social_links`
@@ -2973,7 +2983,7 @@ INSERT INTO `social_links` (`social_links_id`, `type`, `value`) VALUES
 --
 
 CREATE TABLE `subscribe` (
-  `subscribe_id` int(11) NOT NULL,
+  `subscribe_id` int NOT NULL,
   `email` varchar(600) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -2984,12 +2994,12 @@ CREATE TABLE `subscribe` (
 --
 
 CREATE TABLE `subscription` (
-  `subscription_id` int(11) NOT NULL,
+  `subscription_id` int NOT NULL,
   `name` varchar(150) NOT NULL,
   `amount` decimal(10,0) NOT NULL,
-  `post_amount` int(11) NOT NULL,
-  `video_amount` int(11) NOT NULL,
-  `photo_amount` int(11) NOT NULL,
+  `post_amount` int NOT NULL,
+  `video_amount` int NOT NULL,
+  `photo_amount` int NOT NULL,
   `image` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -3012,16 +3022,16 @@ INSERT INTO `subscription` (`subscription_id`, `name`, `amount`, `post_amount`, 
 --
 
 CREATE TABLE `subscription_payment` (
-  `subscription_payment_id` int(11) NOT NULL,
-  `subscription_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `subscription_payment_id` int NOT NULL,
+  `subscription_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `payment_type` varchar(30) NOT NULL,
   `payment_status` varchar(20) NOT NULL,
   `payment_details` longtext NOT NULL,
   `amount` varchar(20) NOT NULL,
-  `purchase_datetime` int(11) NOT NULL,
+  `purchase_datetime` int NOT NULL,
   `payment_code` varchar(50) DEFAULT NULL,
-  `payment_timestamp` int(11) DEFAULT NULL
+  `payment_timestamp` int DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -3048,7 +3058,7 @@ INSERT INTO `subscription_payment` (`subscription_payment_id`, `subscription_id`
 --
 
 CREATE TABLE `third_party_settings` (
-  `third_party_settings_id` int(11) NOT NULL,
+  `third_party_settings_id` int NOT NULL,
   `type` longtext NOT NULL,
   `value` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -3083,7 +3093,7 @@ INSERT INTO `third_party_settings` (`third_party_settings_id`, `type`, `value`) 
 --
 
 CREATE TABLE `ticket` (
-  `ticket_id` int(11) NOT NULL,
+  `ticket_id` int NOT NULL,
   `time` varchar(30) DEFAULT NULL,
   `from_where` varchar(100) DEFAULT NULL,
   `to_where` varchar(100) DEFAULT NULL,
@@ -3106,14 +3116,14 @@ INSERT INTO `ticket` (`ticket_id`, `time`, `from_where`, `to_where`, `subject`, 
 --
 
 CREATE TABLE `ticket_message` (
-  `ticket_message_id` int(11) NOT NULL,
+  `ticket_message_id` int NOT NULL,
   `time` varchar(30) DEFAULT NULL,
   `from_where` varchar(100) DEFAULT NULL,
   `to_where` varchar(100) DEFAULT NULL,
-  `ticket_id` int(11) NOT NULL,
+  `ticket_id` int NOT NULL,
   `subject` varchar(100) DEFAULT NULL,
   `view_status` varchar(100) DEFAULT NULL,
-  `message` longtext DEFAULT NULL
+  `message` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3218,9 +3228,9 @@ INSERT INTO `ticket_message` (`ticket_message_id`, `time`, `from_where`, `to_whe
 --
 
 CREATE TABLE `ui_settings` (
-  `ui_settings_id` int(11) NOT NULL,
-  `type` longtext DEFAULT NULL,
-  `value` longtext DEFAULT NULL
+  `ui_settings_id` int NOT NULL,
+  `type` longtext,
+  `value` longtext
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -3284,32 +3294,32 @@ INSERT INTO `ui_settings` (`ui_settings_id`, `type`, `value`) VALUES
 --
 
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `firstname` longtext DEFAULT NULL,
+  `user_id` int NOT NULL,
+  `firstname` longtext,
   `lastname` varchar(100) DEFAULT NULL,
-  `email` longtext DEFAULT NULL,
-  `phone` longtext DEFAULT NULL,
-  `address1` longtext DEFAULT NULL,
-  `address2` longtext DEFAULT NULL,
+  `email` longtext,
+  `phone` longtext,
+  `address1` longtext,
+  `address2` longtext,
   `city` varchar(100) DEFAULT NULL,
   `state` varchar(100) NOT NULL,
   `country` varchar(100) NOT NULL,
   `zip` varchar(100) DEFAULT NULL,
-  `password` longtext DEFAULT NULL,
-  `creation_date` longtext DEFAULT NULL,
+  `password` longtext,
+  `creation_date` longtext,
   `readlater` longtext NOT NULL,
-  `facebook` longtext DEFAULT NULL,
-  `google` longtext DEFAULT NULL,
-  `skype` longtext DEFAULT NULL,
+  `facebook` longtext,
+  `google` longtext,
+  `skype` longtext,
   `langlat` varchar(50) NOT NULL,
   `last_login` varchar(50) DEFAULT NULL,
-  `fb_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `g_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `g_photo` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
-  `post_amount` int(11) NOT NULL,
-  `video_amount` int(11) NOT NULL,
-  `photo_amount` int(11) NOT NULL,
-  `membership` int(11) NOT NULL,
+  `fb_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `g_id` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `g_photo` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `post_amount` int NOT NULL,
+  `video_amount` int NOT NULL,
+  `photo_amount` int NOT NULL,
+  `membership` int NOT NULL,
   `social_account` longtext NOT NULL,
   `is_blogger` varchar(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -3333,7 +3343,7 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `email`, `phone`, `addre
 --
 
 CREATE TABLE `video` (
-  `video_id` int(11) NOT NULL,
+  `video_id` int NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` longtext NOT NULL,
   `type` varchar(10) NOT NULL,
@@ -3371,8 +3381,8 @@ INSERT INTO `video` (`video_id`, `title`, `description`, `type`, `from`, `video_
 --
 
 CREATE TABLE `widget` (
-  `widget_id` int(11) NOT NULL,
-  `code` longtext DEFAULT NULL,
+  `widget_id` int NOT NULL,
+  `code` longtext,
   `position` varchar(50) DEFAULT NULL,
   `type` varchar(50) DEFAULT NULL,
   `status` varchar(50) DEFAULT NULL,
@@ -3689,277 +3699,277 @@ ALTER TABLE `widget`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `admin_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `advertisement`
 --
 ALTER TABLE `advertisement`
-  MODIFY `advertisement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `advertisement_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `advertisement_payment`
 --
 ALTER TABLE `advertisement_payment`
-  MODIFY `advertisement_payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `advertisement_payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `ad_page`
 --
 ALTER TABLE `ad_page`
-  MODIFY `ad_page_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `ad_page_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `audio`
 --
 ALTER TABLE `audio`
-  MODIFY `audio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `audio_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `blog`
 --
 ALTER TABLE `blog`
-  MODIFY `blog_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `blog_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `blogs_social_links`
 --
 ALTER TABLE `blogs_social_links`
-  MODIFY `blogs_social_links_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `blogs_social_links_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `blog_category`
 --
 ALTER TABLE `blog_category`
-  MODIFY `blog_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `blog_category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `blog_photo`
 --
 ALTER TABLE `blog_photo`
-  MODIFY `blog_photo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `blog_photo_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `blog_sub_category`
 --
 ALTER TABLE `blog_sub_category`
-  MODIFY `blog_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `blog_sub_category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `blog_video`
 --
 ALTER TABLE `blog_video`
-  MODIFY `blog_video_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `blog_video_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `business_settings`
 --
 ALTER TABLE `business_settings`
-  MODIFY `business_settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `business_settings_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `contact_message`
 --
 ALTER TABLE `contact_message`
-  MODIFY `contact_message_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `contact_message_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `currency_settings`
 --
 ALTER TABLE `currency_settings`
-  MODIFY `currency_settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `currency_settings_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `driver_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `email_template`
 --
 ALTER TABLE `email_template`
-  MODIFY `email_template_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `email_template_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `general_settings`
 --
 ALTER TABLE `general_settings`
-  MODIFY `general_settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `general_settings_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `language`
 --
 ALTER TABLE `language`
-  MODIFY `word_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1630;
+  MODIFY `word_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1630;
 
 --
 -- AUTO_INCREMENT for table `language_list`
 --
 ALTER TABLE `language_list`
-  MODIFY `language_list_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `language_list_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `logo`
 --
 ALTER TABLE `logo`
-  MODIFY `logo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `logo_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `news`
 --
 ALTER TABLE `news`
-  MODIFY `news_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `news_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `news_archive`
 --
 ALTER TABLE `news_archive`
-  MODIFY `news_archive_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `news_archive_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `news_category`
 --
 ALTER TABLE `news_category`
-  MODIFY `news_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `news_category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `news_reporter`
 --
 ALTER TABLE `news_reporter`
-  MODIFY `news_reporter_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `news_reporter_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `news_speciality`
 --
 ALTER TABLE `news_speciality`
-  MODIFY `news_speciality_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `news_speciality_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `news_sub_category`
 --
 ALTER TABLE `news_sub_category`
-  MODIFY `news_sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `news_sub_category_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `page`
 --
 ALTER TABLE `page`
-  MODIFY `page_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `page_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `permission`
 --
 ALTER TABLE `permission`
-  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `permission_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
 
 --
 -- AUTO_INCREMENT for table `photo`
 --
 ALTER TABLE `photo`
-  MODIFY `photo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `photo_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `poll`
 --
 ALTER TABLE `poll`
-  MODIFY `poll_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `poll_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `races`
 --
 ALTER TABLE `races`
-  MODIFY `race_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `race_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `race_schedule`
 --
 ALTER TABLE `race_schedule`
-  MODIFY `race_schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `race_schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `race_season`
 --
 ALTER TABLE `race_season`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `race_standings`
 --
 ALTER TABLE `race_standings`
-  MODIFY `race_stand_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `race_stand_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `role_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `social_links`
 --
 ALTER TABLE `social_links`
-  MODIFY `social_links_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `social_links_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `subscribe`
 --
 ALTER TABLE `subscribe`
-  MODIFY `subscribe_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subscribe_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `subscription`
 --
 ALTER TABLE `subscription`
-  MODIFY `subscription_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `subscription_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `subscription_payment`
 --
 ALTER TABLE `subscription_payment`
-  MODIFY `subscription_payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `subscription_payment_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `third_party_settings`
 --
 ALTER TABLE `third_party_settings`
-  MODIFY `third_party_settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `third_party_settings_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ticket_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ticket_message`
 --
 ALTER TABLE `ticket_message`
-  MODIFY `ticket_message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `ticket_message_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `ui_settings`
 --
 ALTER TABLE `ui_settings`
-  MODIFY `ui_settings_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `ui_settings_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `video`
 --
 ALTER TABLE `video`
-  MODIFY `video_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `video_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `widget`
 --
 ALTER TABLE `widget`
-  MODIFY `widget_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `widget_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
