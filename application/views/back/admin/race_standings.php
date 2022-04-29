@@ -1,7 +1,7 @@
 <?php
      $races = $this->db->get('races')->result_array();
 
-     $step = $_GET['step'];
+     $step = isset($_GET['step']) ? $_GET['step'] : 0 ;
      $race_id = $this->input->get('race_id') ? $this->input->get('race_id') : $races[0]['race_id'];
 ?>
 
