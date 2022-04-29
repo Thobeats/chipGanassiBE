@@ -4806,8 +4806,8 @@ class Admin extends CI_Controller {
             recache();
         } elseif ($para1 == 'delete') {
             if(!demo()){
-                $this->db->where('race_schedule_id', $para2);
-                $this->db->delete('race_schedule');
+                $this->db->where('driver_id', $para2);
+                $this->db->delete('drivers');
             }
           
         }elseif ($para1 == 'list') {

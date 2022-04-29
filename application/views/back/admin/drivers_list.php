@@ -58,7 +58,7 @@
                                <?php echo translate('edit'); ?>
                         </a>
                         <a class="btn btn-danger btn-xs btn-labeled fa fa-trash" data-toggle="tooltip"
-                           onclick="delete_confirm('<?php echo $row['race_schedule_id']; ?>', '<?php echo translate('really_want_to_delete_this?'); ?>')"  
+                           onclick="delete_confirm('<?php echo $row['driver_id']; ?>', '<?php echo translate('really_want_to_delete_this?'); ?>')"  
                            data-original-title="Delete" data-container="body">
                                <?php echo translate('delete'); ?>
                         </a>
