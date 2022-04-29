@@ -283,9 +283,9 @@
 
                         <!-- Racing Starts -->
                         <?php
-                            if ($this->Crud_model->admin_permission('races') ||
-                                    $this->Crud_model->admin_permission('race_schedule') ||
-                                    $this->Crud_model->admin_permission('race_standings') 
+                            if ($this->Crud_model->admin_permission('racing') ||
+                                    $this->Crud_model->admin_permission('racing') ||
+                                    $this->Crud_model->admin_permission('racing') 
                                     ){
                                 ?>
                                 <li <?php
@@ -311,7 +311,7 @@
                                         <?php } ?>" >
 
                                         <?php
-                                            if($this->Crud_model->admin_permission('races')) {
+                                            if($this->Crud_model->admin_permission('racing')) {
                                         ?>
                                             <li <?php if ($page_name == "races") { ?> class="active-link" <?php } ?> >
                                                 <a href="<?php echo base_url(); ?>admin/races">
@@ -320,7 +320,7 @@
                                                 </a>
                                             </li>
                                         <?php
-                                            }if ($this->Crud_model->admin_permission('race_schedule')) {
+                                            }if ($this->Crud_model->admin_permission('racing')) {
                                         ?>
                                             <li <?php if ($page_name == "race_schedule") { ?> class="active-link" <?php } ?> >
                                                 <a href="<?php echo base_url(); ?>admin/race_schedule">
@@ -329,7 +329,7 @@
                                                 </a>
                                             </li>
                                         <?php
-                                            }if ($this->Crud_model->admin_permission('race_setup')) {
+                                            }if ($this->Crud_model->admin_permission('racing')) {
                                         ?>
                                             <li <?php if ($page_name == "race_setup") { ?> class="active-link" <?php } ?> >
                                                 <a href="<?php echo base_url(); ?>admin/race_setup">
@@ -338,7 +338,7 @@
                                                 </a>
                                             </li>
                                         <?php
-                                            } if($this->Crud_model->admin_permission('race_standings')) {
+                                            } if($this->Crud_model->admin_permission('racing')) {
                                         ?>
                                             <li <?php if ($page_name == "race_standings") { ?> class="active-link" <?php } ?> >
                                                 <a href="<?php echo base_url(); ?>admin/race_standings">
@@ -391,7 +391,7 @@
                                                 </a>
                                             </li>
                                         <?php
-                                            }if($this->Crud_model->admin_permission('driver_new')) {
+                                            }if($this->Crud_model->admin_permission('drivers')) {
                                         ?>
                                                     <li <?php if ($page_name == "driver_new") { ?> class="active-link" <?php } ?> >
                                                         <a href="<?php echo base_url(); ?>admin/drivers/new">
