@@ -2275,7 +2275,7 @@ class Admin extends CI_Controller {
                     'password' => sha1($this->input->post('password'))
                 ));
                 if ($login_data->num_rows() > 0) {
-                    $get_season = $this->db->get_where('season', ['status' => 'active']) ? $this->db->get_where('season', ['status' => 'active'])->row()->season : "2021/22";       
+                    $get_season = $this->db->get_where('race_season', ['status' => 'active']) ? $this->db->get_where('season', ['status' => 'active'])->row()->season : "2021/22";       
                     $this->session->set_userdata('season', $get_season);
                     foreach ($login_data->result_array() as $row) {
                         $this->session->set_userdata('login', 'yes');
