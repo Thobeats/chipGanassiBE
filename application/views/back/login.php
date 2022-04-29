@@ -39,7 +39,7 @@
 
 <body>
 	<div id="container" class="cls-container"
-    style="background:url(<?php echo base_url(); ?>uploads/others/bg_img.jpg);">
+    style="background:url(<?php echo base_url(); ?>uploads/others/ME-Detroit-1080.jpg); background-size: cover;">
 		<!-- BACKGROUND IMAGE -->
 		<div id="bg-overlay"></div>
 		<!-- LOGIN FORM -->
