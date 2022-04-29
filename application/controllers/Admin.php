@@ -4494,9 +4494,9 @@ class Admin extends CI_Controller {
      }
 
      function races($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('races')) {
-            redirect(base_url() . 'admin');
-        }
+        // if (!$this->Crud_model->admin_permission('races')) {
+        //     redirect(base_url() . 'admin');
+        // }
         if ($para1 == 'do_add') {
             $data['name'] = $this->input->post('name');
             $this->db->insert('races', $data);
@@ -4530,9 +4530,9 @@ class Admin extends CI_Controller {
      }
 
      function race_schedule($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('race_schedule')) {
-            redirect(base_url() . 'admin');
-        }
+        // if (!$this->Crud_model->admin_permission('race_schedule')) {
+        //     redirect(base_url() . 'admin');
+        // }
         if ($para1 == 'do_add') {
             $data['race_id'] = $this->input->post('race_id');
             $data['from_date'] = strtotime($this->input->post('from_date'));
@@ -4582,9 +4582,9 @@ class Admin extends CI_Controller {
      }
 
      function race_setup($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('race_schedule')) {
-            redirect(base_url() . 'admin');
-        }
+        // if (!$this->Crud_model->admin_permission('race_schedule')) {
+        //     redirect(base_url() . 'admin');
+        // }
         if ($para1 == 'do_add') {
             $data = [];
             $race_id = $this->input->post('race_id');
@@ -4642,9 +4642,9 @@ class Admin extends CI_Controller {
      }
 
      function race_standings($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('race_standings')) {
-            redirect(base_url() . 'admin');
-        }
+        // if (!$this->Crud_model->admin_permission('race_standings')) {
+        //     redirect(base_url() . 'admin');
+        // }
         
         if ($para1 == "update") {
             $race_id = $this->input->post('race_id');
@@ -4689,9 +4689,9 @@ class Admin extends CI_Controller {
      }
 
      function drivers($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('drivers')) {
-            redirect(base_url() . 'admin');
-        }
+        // if (!$this->Crud_model->admin_permission('drivers')) {
+        //     redirect(base_url() . 'admin');
+        // }
         if($para1 == 'new'){
             $page_data['page_name'] = "driver_new";
             $this->load->view('back/index', $page_data);
