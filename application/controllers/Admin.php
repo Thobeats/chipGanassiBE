@@ -4494,7 +4494,7 @@ class Admin extends CI_Controller {
      }
 
      function races($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('races')) {
+        if (!$this->Crud_model->admin_permission('racing')) {
             redirect(base_url() . 'admin');
         }
         if ($para1 == 'do_add') {
@@ -4530,7 +4530,7 @@ class Admin extends CI_Controller {
      }
 
      function race_schedule($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('race_schedule')) {
+        if (!$this->Crud_model->admin_permission('racing')) {
             redirect(base_url() . 'admin');
         }
         if ($para1 == 'do_add') {
@@ -4582,7 +4582,7 @@ class Admin extends CI_Controller {
      }
 
      function race_setup($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('race_schedule')) {
+        if (!$this->Crud_model->admin_permission('racing')) {
             redirect(base_url() . 'admin');
         }
         if ($para1 == 'do_add') {
@@ -4642,7 +4642,7 @@ class Admin extends CI_Controller {
      }
 
      function race_standings($para1="", $para2=""){
-        if (!$this->Crud_model->admin_permission('race_standings')) {
+        if (!$this->Crud_model->admin_permission('racing')) {
             redirect(base_url() . 'admin');
         }
         
