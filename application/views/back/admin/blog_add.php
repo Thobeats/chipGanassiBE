@@ -1,3 +1,4 @@
+<div class="content-container">
 <div class="row">
     <div class="col-md-12">
         <?php
@@ -166,6 +167,7 @@
 </div>
 <input type="hidden" name="img_count" id="img_count" value="0" />
 <input type="hidden" id="nums" value='1' />
+</div>
 </div>
 <script src="<?php echo base_url(); ?>template/back/plugins/bootstrap-tagsinput/bootstrap-tagsinput.min.js">
 </script>

@@ -159,6 +159,39 @@
 
         <div class="row">
             <div class="col-md-12 col-sm-12">
+                <div class="col-md-3 col-sm-6">
+                    <div class="panel panel-dark panel-colorful">
+                        <div class="pad-all media">
+                            <div class="media-left">
+                                <span class="icon-wrap icon-wrap-xs">
+                                    <i class="fa fa-car fa-3x"></i>
+                                </span>
+                            </div>
+                            <div class="media-body">
+                                <p class="h3 text-thin media-heading">
+                                    <?php
+                                        $total_drivers = $this->db->get('drivers')->num_rows();
+                                       echo $total_drivers;
+                                    ?>
+                                </p>
+                                <small class="text-uppercase"><?php echo translate('total_no_of_drivers'); ?></small>
+                            </div>
+                        </div>
+
+                        <!-- <div class="progress progress-xs progress-dark-base mar-no">
+                            <div role="progressbar" aria-valuenow="<?php echo $published; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total; ?>" class="progress-bar progress-bar-light" style="width: 100%"></div>
+                        </div>
+
+                        <div class="pad-all text-right panel_button">
+                            <small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> <?php echo $unpublished; ?> </span> <?php echo translate('unpublished_media_uploads'); ?></small>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
                 <div class="col-md-12 col-sm-12">
                     <div class="panel panel-light panel-colorful">
                         <div class="panel-heading">

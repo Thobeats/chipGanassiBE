@@ -103,17 +103,16 @@ function reloadStylesheets() {
 
 }
 
-
-
 $(document).ready(function () {
     if ($('#lang_select').length) {
     } else {
+        
         ajax_load(base_url + '' + user_type + '/' + module + '/' + list_cont_func, 'list', 'first');
     }
 });
 
-function ajax_modal(type, title, noty, form_id, id) {
-    modal_form(title, noty, form_id);
+function ajax_modal(type, title, noty, form_id, id, size='') {
+    modal_form(title, noty, form_id, size);
     ajax_load(base_url + '' + user_type + '/' + module + '/' + type + '/' + id, 'form', 'form');
     sound('ajax_load');
 }
@@ -444,16 +443,22 @@ function form_submit(form_id, noty, e) {
                 buttonp.addClass('disabled');
                 buttonp.html(working);
             },
-            success: function () {
+            success: function (data="") {
                 if(form_id == 'blog_post_add'){
                     window.location.replace(base_url+"admin/blog");
                 } else if (form_id == 'blog_image_post_add'){
                     window.location.replace(base_url+"admin/blog_photo");
                 } else if(form_id == 'blog_video_post_add'){
                     window.location.replace(base_url+"admin/blog_video");
-                } else {
+                }
+                else if(form_id == 'driver_new'){
+                    window.location.replace(base_url+"admin/drivers");
+                } 
+                else {
                     ajax_load(base_url + '' + user_type + '/' + module + '/' + list_cont_func + '/' + extra, 'list', 'first');
                 }
+
+                console.log(data);
                 $.activeitNoty({
                     type: 'success',
                     icon: 'fa fa-check',
@@ -476,10 +481,12 @@ function form_submit(form_id, noty, e) {
     }
 }
 
-function modal_form(title, noty, form_id) {
+function modal_form(title, noty, form_id, size='') {
+    console.log(size)
     bootbox.dialog({
         title: title,
         message: "<div id='form'></div>",
+        size: size,
         buttons: {
             success: {
                 label: sv,

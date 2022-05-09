@@ -274,3 +274,33 @@
 			return $CI->config->item('demo');
 		}
 	}
+
+	//get race name
+	if ( ! function_exists('race_name'))
+	{
+		function race_name($id){
+			$CI=& get_instance();
+			return $CI->db->get_where('races',['race_id' => $id])->row()->name;
+		}
+	}
+
+	//get user name
+	if ( ! function_exists('admin_name'))
+	{
+		function admin_name($id){
+			$CI=& get_instance();
+			return $CI->db->get_where('admin',['admin_id' => $id])->row()->name;
+		}
+	}
+
+	//create list of drivers
+	if ( ! function_exists('driver_name'))
+	{
+		function driver_name($driver_id){
+			$CI=& get_instance();
+			$driver = $CI->db->get_where('drivers',['driver_id' => $driver_id])->row();
+
+			return $driver->firstname . " " . $driver->lastname;
+		}
+	}
+

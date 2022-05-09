@@ -107,9 +107,9 @@
 
 <script type="text/javascript" src="<?php echo base_url(); ?>template/back/js/jspdf.debug.js"></script>
 
-
 <script type="text/javascript">
     setInterval(session_check, 600000);
+    
 
     function session_check() {
         $.ajax({
@@ -131,5 +131,8 @@
         var id = h.attr('id');
         new Switchery(document.getElementById(id), {color: 'rgb(100, 189, 99)', secondaryColor: '#cc2424', jackSecondaryColor: '#c8ff77'});
     });
+  
+    
+
 
 </script>

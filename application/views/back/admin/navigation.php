@@ -281,6 +281,136 @@
                         ?>
                         <!-- Manage Blog Ends -->
 
+                        <!-- Racing Starts -->
+                        <?php
+                            if ($this->Crud_model->admin_permission('racing') ||
+                                    $this->Crud_model->admin_permission('racing') ||
+                                    $this->Crud_model->admin_permission('racing') 
+                                    ){
+                                ?>
+                                <li <?php
+                                        if ($page_name == "races" ||
+                                                $page_name == "race_schedule" ||
+                                                $page_name == "race_standings") {
+                                    ?>
+                                        class="active-sub"
+                                    <?php } ?> >
+                                    <a href="#">
+                                        <i class="fa fa-flag-checkered"></i>
+                                        <span class="menu-title">
+                                            <?php echo translate('racing'); ?>
+                                        </span>
+                                        <i class="fa arrow"></i>
+                                    </a>
+                                    <ul class="collapse <?php
+                                    if ($page_name == "races" ||
+                                    $page_name == "race_schedule" ||
+                                    $page_name == "race_standings") {
+                                        ?>
+                                            in
+                                        <?php } ?>" >
+
+                                        <?php
+                                            if($this->Crud_model->admin_permission('racing')) {
+                                        ?>
+                                            <li <?php if ($page_name == "races") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/races">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('races'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
+                                            }if ($this->Crud_model->admin_permission('racing')) {
+                                        ?>
+                                            <li <?php if ($page_name == "race_schedule") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/race_schedule">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('race_schedule'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
+                                            }if ($this->Crud_model->admin_permission('racing')) {
+                                        ?>
+                                            <li <?php if ($page_name == "race_setup") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/race_setup">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('race_setup'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
+                                            } if($this->Crud_model->admin_permission('racing')) {
+                                        ?>
+                                            <li <?php if ($page_name == "race_standings") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/race_standings">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('race_standings'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
+                                            }
+                                        ?>                                         
+                                    </ul>
+                                </li>
+
+                                <?php
+                            }
+                        ?>
+
+                        <!-- Manage Racing Ends -->
+
+                        <!-- Drivers Starts -->
+                        <?php
+                            if ($this->Crud_model->admin_permission('drivers')
+                                    ){
+                                ?>
+                                <li <?php
+                                        if ($page_name == "drivers") {
+                                    ?>
+                                        class="active-sub"
+                                    <?php } ?> >
+                                    <a href="#">
+                                        <i class="fa fa-car"></i>
+                                        <span class="menu-title">
+                                            <?php echo translate('drivers'); ?>
+                                        </span>
+                                        <i class="fa arrow"></i>
+                                    </a>
+                                    <ul class="collapse <?php
+                                    if ($page_name == "drivers") {
+                                        ?>
+                                            in
+                                        <?php } ?>" >
+
+                                        <?php
+                                            if($this->Crud_model->admin_permission('drivers')) {
+                                        ?>
+                                            <li <?php if ($page_name == "drivers") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/drivers">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('drivers'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
+                                            }if($this->Crud_model->admin_permission('drivers')) {
+                                        ?>
+                                                    <li <?php if ($page_name == "driver_new") { ?> class="active-link" <?php } ?> >
+                                                        <a href="<?php echo base_url(); ?>admin/drivers/new">
+                                                            <i class="fa fa-circle fs_i"></i>
+                                                            <?php echo translate('new_driver'); ?>
+                                                        </a>
+                                                    </li>
+                                        <?php
+                                            }
+                                        ?>                                        
+                                    </ul>
+                                </li>
+
+                                <?php
+                            }
+                        ?>
+
+                        <!-- Manage Drivers Ends -->
+
                         <!--  Poll Starts  -->
                         <?php
                             if ($this->Crud_model->admin_permission('poll')) {

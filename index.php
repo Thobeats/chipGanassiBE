@@ -55,7 +55,7 @@
  */
 	include_once './application/libraries/vendor/autoload.php';
 
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'production');
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
 
 /*
  *---------------------------------------------------------------
@@ -144,7 +144,7 @@ if ($error_reporting == 1) {
  *
  * NO TRAILING SLASH!
  */
-	$view_folder = '';
+	$view_folder = 'views';
 
 
 /*
