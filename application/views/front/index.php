@@ -21,6 +21,7 @@
             ?>
             
             <?php include $page_name.'/index.php' ;?>
+            
 
             <?php include 'footer/footer-1.php' ;?>
 
