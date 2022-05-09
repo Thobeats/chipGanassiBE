@@ -1,5 +1,6 @@
 <div class="thumbnail news_box_sqr_1 sm hover2">
     <div class="row">
+        
         <div class="col-md-12">
             <div class="media">
                 <span class="media-link">

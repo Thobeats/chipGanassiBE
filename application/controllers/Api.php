@@ -101,11 +101,19 @@ class Api extends CI_Controller {
         $config['last_tag_open'] = '<li><a onClick="' . $function . '">';
         $config['last_tag_close'] = '</a></li>';
 
+<<<<<<< HEAD
+        $function = "filter_blog('" . (int) ($para1 - $config['per_page']) . "')";
+        $config['prev_tag_open'] = '<li><a onClick="' . $function . '">';
+        $config['prev_tag_close'] = '</a></li>';
+
+        $function = "filter_blog('" . (int) ($para1 + $config['per_page']) . "')";
+=======
         $function = "filter_blog('" . ($para1 - $config['per_page']) . "')";
         $config['prev_tag_open'] = '<li><a onClick="' . $function . '">';
         $config['prev_tag_close'] = '</a></li>';
 
         $function = "filter_blog('" . ($para1 + $config['per_page']) . "')";
+>>>>>>> bed32852422aca93ed0bbc0301afeab89300c111
         $config['next_link'] = '&rsaquo;';
         $config['next_tag_open'] = '<li><a onClick="' . $function . '">';
         $config['next_tag_close'] = '</a></li>';
@@ -297,6 +305,16 @@ class Api extends CI_Controller {
         $config['last_tag_open'] = '<li><a onClick="' . $function . '">';
         $config['last_tag_close'] = '</a></li>';
 
+<<<<<<< HEAD
+        $function = "filter_news('" . (int) ($para1 - $config['per_page']) . "')";
+        $config['prev_tag_open'] = '<li><a onClick="' . $function . '">';
+        $config['prev_tag_close'] = '</a></li>';
+
+        $function = "filter_news('" . (int) ($para1 + $config['per_page']) . "')";
+        $config['next_link'] = '&rsaquo;';
+        $config['next_tag_open'] = '<li><a onClick="' . $function . '">';
+    
+=======
         $function = "filter_news('" . ($para1 - $config['per_page']) . "')";
         $config['prev_tag_open'] = '<li><a onClick="' . $function . '">';
         $config['prev_tag_close'] = '</a></li>';
@@ -304,6 +322,7 @@ class Api extends CI_Controller {
         $function = "filter_news('" . ($para1 + $config['per_page']) . "')";
         $config['next_link'] = '&rsaquo;';
         $config['next_tag_open'] = '<li><a onClick="' . $function . '">';
+>>>>>>> bed32852422aca93ed0bbc0301afeab89300c111
         $config['next_tag_close'] = '</a></li>';
 
         $config['full_tag_open'] = '<ul class="pagination">';

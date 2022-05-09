@@ -35,10 +35,14 @@ class Home extends CI_Controller {
 
     public function index() {
         $page_data['asset_page'] = 'home';
-        $page_data['page_name'] = 'home/home-1';
+        // $page_data['page_name'] = 'home/home-1';
+        $page_data['page_name'] = 'home/home-2';
         $page_data['page_title'] = translate('home');
         $page_data['page_meta'] = $this->get_page_meta();
-        $this->load->view('front/index', $page_data);
+        // $this->load->view('front/index', $page_data);
+        $this->load->view('front/index-2', $page_data);
+
+        
     }
 
     function news($para1 = '', $para2 = '', $para3 = '', $para4 = '', $para5 = '') {

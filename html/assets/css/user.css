@@ -1,0 +1,93 @@
+/* prettier-ignore */
+/*-----------------------------------------------
+|   Navigation 
+------------------------------------------------*/
+/*-----------------------------------------------
+|   Navbar Brand 
+------------------------------------------------*/
+/*# sourceMappingURL=user.css.map */
+.strokeme {
+  color: black;
+}
+.cgr-bg {
+	background-image: url("/assets/img/cgrbg1.jpg");
+	background-color: #cccccc;
+}
+.cgr-cf {
+	background-image: url("/assets/img/cf-cgr.png");
+	background-color: #cccccc;
+}
+/*------------Stolen from current site-----------*/
+.driver-info {
+  float: left;
+}
+.driver-info table {
+}
+.driver-info table tr {
+}
+.driver-info table tr td:first-child {
+  font-weight: bold;
+}
+.cgr-shadow {
+  text-shadow: 4px 4px #000000;
+}
+
+.news_link{    
+  background-size: 200% 200%;
+  color : #fff;
+  background-image: linear-gradient(to left, #fff 50%, transparent 50%);
+  transition: background-position 500ms, color 300ms ease;
+}
+
+.news_link:hover{    
+  background-size: 200% 200%;
+  color : #000;
+  text-shadow: none;
+  background-image: linear-gradient(to left, #fff 50%, transparent 50%);
+  background-position: 100% 0;
+  transition: background-position 500ms, color 300ms ease;
+}
+
+.read-more{
+  color: #cccccc;
+  font-size: 14px;
+  transition: color 300ms;
+  cursor: pointer;
+}
+
+.read-more:hover{
+  color : #d0021b;
+}
+
+.page-item.active .page-link{
+  background-color: #d0021b;
+  border-color: #d0021b;
+}
+
+.page-item .page-link:hover{
+  background-color: #d0021b;
+  border-color: #d0021b;
+}
+
+.archive_link:hover{
+  border-bottom: 1px solid #000;
+  transition: .5s all ease;
+}
+
+.news_heading{
+  height : 70vh;
+}
+
+#twitter-timeline{
+  height : 500px;
+  scroll-behavior: smooth;
+  overflow: scroll;
+}
+
+
+/* On screens that are 600px or less, set the background color to olive */
+@media screen and (max-width: 600px) {
+  .news_heading, .news_header{
+    height : 50vh;
+  }
+}
