@@ -5,6 +5,7 @@
             <tr>
                 <th data-align="center"><?php echo translate('no'); ?></th>
                 <th data-align="center"><?php echo translate('race'); ?></th>
+                <th data-align="center"><?php echo translate('venue'); ?></th>
                 <th data-align="center"><?php echo translate('drivers'); ?></th>
                 <th data-align="center"><?php echo translate('season'); ?></th>
                 <th data-align="center"><?php echo translate('created_at'); ?></th>
@@ -26,6 +27,9 @@
                     </td>
                     <td>
                         <?php $rid = $row['race_id']; echo race_name($rid); ?>
+                    </td>
+                    <td>
+                        <?php $vid = $row['venue_id']; echo venue_name($vid); ?>
                     </td>
                     <td>
                         <?php $did = $row['driver']; echo driver_name($did); ?>

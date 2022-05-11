@@ -30,9 +30,6 @@ class Html_model extends CI_Model
 
     }
 
-
-    
-
 	function photo_box($style = '',$data = array())
     {
         $this->load->view('front/components/photo_box/photo_box_'.$style,$data);

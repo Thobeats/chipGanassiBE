@@ -3,7 +3,7 @@
         <!--Brand logo & name-->
         <div class="navbar-header">
             <a href="<?php echo base_url(); ?><?php echo $this->session->userdata('title'); ?>" class="navbar-brand">
-                <img src="<?php echo $this->Crud_model->logo('admin_login_logo'); ?>" alt="<?php echo $system_name;?>" class="brand-icon" style="padding:8px;">
+                <img src="<?= base_url() . 'uploads/logo_image/cgr.png'  ?>" alt="<?php echo $system_name;?>" class="brand-icon" style="margin-top:10px; width:30%; height : 30px;">
                 <div class="brand-title">
                     <span class="brand-text"><?php echo $system_name;?></span>
                 </div>

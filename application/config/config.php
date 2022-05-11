@@ -27,8 +27,8 @@ $root=(isset($_SERVER['HTTPS']) ? "https://" : "http://").$_SERVER['HTTP_HOST'];
 $root.= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
 //$root = 'http://localhost/admin';
 
-$config['base_url'] = "https://cgbe.herokuapp.com/";
-//$config['base_url'] = $root;
+$config['base_url'] = $root;
+//$config['base_url'] = '';
 
 // false = Main Script;
 // true = Demo Script
@@ -123,7 +123,7 @@ $config['enable_hooks'] = FALSE;
 | https://codeigniter.com/user_guide/general/creating_libraries.html
 |
 */
-$config['subclass_prefix'] = 'MY_';
+$config['subclass_prefix'] = '';
 
 /*
 |--------------------------------------------------------------------------

@@ -2275,7 +2275,7 @@ class Admin extends CI_Controller {
                     'password' => sha1($this->input->post('password'))
                 ));
                 if ($login_data->num_rows() > 0) {
-                    $get_season = $this->db->get_where('race_season', ['status' => 'active']) ? $this->db->get_where('race_season', ['status' => 'active'])->row()->season : "2021/22";       
+                    $get_season = $this->db->get_where('race_season', ['status' => 'active'])->row != NULL ? $this->db->get_where('race_season', ['status' => 'active'])->row()->season : "2021/22";       
                     $this->session->set_userdata('season', $get_season);
                     foreach ($login_data->result_array() as $row) {
                         $this->session->set_userdata('login', 'yes');
@@ -4508,6 +4508,7 @@ class Admin extends CI_Controller {
             $this->load->view('back/admin/race_edit', $page_data);
         } elseif ($para1 == "update") {
             $data['name'] = $this->input->post('name');
+            $data['status'] = $this->input->post('status');
             $this->db->where('race_id', $para2);
             $this->db->update('races', $data);
             recache();
@@ -4535,6 +4536,7 @@ class Admin extends CI_Controller {
         }
         if ($para1 == 'do_add') {
             $data['race_id'] = $this->input->post('race_id');
+            $data['race_venue'] = $this->input->post('venue');
             $data['from_date'] = strtotime($this->input->post('from_date'));
             $data['to_date'] = strtotime($this->input->post('to_date'));
             $data['year'] = date('Y', strtotime($this->input->post('from_date')));
@@ -4550,6 +4552,7 @@ class Admin extends CI_Controller {
         } elseif ($para1 == "update") {
             $data = [
                 'race_id' => $this->input->post('race_id'),
+                'race_venue' => $this->input->post('venue'),
                 'from_date' => strtotime($this->input->post('from_date')),
                 'to_date' => strtotime($this->input->post('to_date')),
                 'created_by' => $this->session->userdata('admin_id'),
@@ -4589,10 +4592,12 @@ class Admin extends CI_Controller {
             $data = [];
             $race_id = $this->input->post('race_id');
             $drivers = $this->input->post('driver_id');
+            $venue = $this->input->post('venue_id');
 
             foreach($drivers as $driver){
                 $data[] = [
                     'race_id' => $race_id,
+                    'venue_id' => $venue,
                     'driver' => $driver,
                     'points' => "0",
                     'season' => $this->session->userdata('season'),
@@ -4612,6 +4617,7 @@ class Admin extends CI_Controller {
         } elseif ($para1 == "update") {
             $data = [
                 'race_id' => $this->input->post('race_id'),
+                'venue_id' => $this->input->post('venue_id'),
                 'driver' => $this->input->post('driver_id'),
                 'updated_by' => $this->session->userdata('admin_id'),
                 'updated_at' => date('Y-m-d h:i:s'),
@@ -4641,13 +4647,48 @@ class Admin extends CI_Controller {
         }
      }
 
+     function venueByRace($id){
+         $collect = '';
+        $ven = $this->db->where('race_id', $id)->order_by('race_schedule_id', 'desc')->get('race_schedule')->result();
+
+        foreach($ven as $v){
+            $collect .= "<option value='$v->race_schedule_id'>$v->race_venue</option>";
+        }
+
+        echo $collect;
+     }
+
+     function driverByVenue($id){
+        $collect = '';
+       $ven = $this->db->query("select st.*, dr.firstname, dr.lastname from race_standings st inner join drivers dr on st.driver = dr.driver_id where st.venue_id = '$id'")->result();
+
+       foreach($ven as $v){
+           $collect .= "
+        
+           <input type='hidden' name='race_stand_id[]' value='$v->race_stand_id'>
+           <div class='form-group'>
+                <label class='col-sm-4 control-label' for='demo-hor-1'>
+                    $v->firstname  $v->lastname
+                <input type='hidden' name='driver_id[]' value='$v->driver'>
+                </label>
+                <div class='col-sm-6'>
+                    <input type='text' placeholder='Enter Points' name='points[]' class='form-control required' value='$v->points'> 
+                </div>
+            </div>
+          
+           ";
+       }
+
+       echo $collect;
+    }
+
      function race_standings($para1="", $para2=""){
         if (!$this->Crud_model->admin_permission('racing')) {
             redirect(base_url() . 'admin');
         }
         
         if ($para1 == "update") {
-            $race_id = $this->input->post('race_id');
+            $race_id = $para2;
             $check = $this->db->get_where('racing_standings', ['race_id'=>$race_id, 'season'=> $this->session->userdata('season')]);
     
             $data = [] ;
@@ -4680,7 +4721,7 @@ class Admin extends CI_Controller {
         } elseif ($para1 == 'add') {
             $race_id = $this->input->get('race_id');
             $page_data['race_id'] = $race_id;
-            $page_data['drivers'] = $this->db->order_by('driver','desc')->where(['race_id' => $race_id, 'season' => $this->session->userdata('season')])->get('race_standings')->result_array();
+            $page_data['venues'] = $this->db->where(['race_id' => $race_id])->select('venue_id')->group_by('venue_id')->get('race_standings')->result_array();
             $this->load->view('back/admin/race_standings_add', $page_data);
         } else{        
             $page_data['page_name'] = "race_standings";
@@ -4694,6 +4735,7 @@ class Admin extends CI_Controller {
         }
         if($para1 == 'new'){
             $page_data['page_name'] = "driver_new";
+            $page_data['partners'] = $this->db->get('partners')->result_array();
             $this->load->view('back/index', $page_data);
         }
         elseif($para1 == 'view'){
@@ -4716,9 +4758,12 @@ class Admin extends CI_Controller {
             $data['facebook'] = $this->input->post('facebook');
             $data['instagram'] = $this->input->post('instagram');
             $data['website'] = $this->input->post('website');
+            $data['partner'] = $this->input->post('partner');
             $data['created_by'] = $this->session->userdata('admin_id');
 
-           $this->db->insert('drivers', $data);
+          if(!$this->db->insert('drivers', $data)){
+              var_dump($this->db->error());
+          }
                 
             $id = $this->db->insert_id();
             $pro_img = array();
@@ -4754,6 +4799,8 @@ class Admin extends CI_Controller {
         } else if ($para1 == 'edit') {
             $_SESSION['driver_details'] = $this->db->get_where('drivers', ['driver_id' => $para2])->row_array();
            $page_data['page_name'] = "driver_new";
+           $page_data['partners'] = $this->db->get('partners')->result_array();
+
             $this->load->view('back/index', $page_data);
         } elseif ($para1 == "update") {
             $data['firstname'] = $this->input->post('first_name');
@@ -4772,6 +4819,7 @@ class Admin extends CI_Controller {
             $data['facebook'] = $this->input->post('facebook');
             $data['instagram'] = $this->input->post('instagram');
             $data['website'] = $this->input->post('website');
+            $data['partner'] = $this->input->post('partner');
             $data['created_by'] = $this->session->userdata('admin_id');
 
                 
@@ -4824,9 +4872,146 @@ class Admin extends CI_Controller {
         }
      }
 
+
+
+     function partners($para1='', $para2=''){
+        if($para1 == 'add'){
+            $page_data['page_name'] = "partner_new";
+            $this->load->view('back/index', $page_data);
+        }elseif ($para1 == 'list') {
+            $this->db->order_by('id', 'desc');
+            $page_data['all_categories'] = $this->db->get('partners')->result_array();
+            $this->load->view('back/admin/partners_list', $page_data);
+        }
+        elseif ($para1 == 'do_add') {
+            $data['name'] = $this->input->post('name');
+            $data['bio'] = $this->input->post('description');
+            
+            $data['created_by'] = $this->session->userdata('admin_id');
+
+           $this->db->insert('partners', $data);
+                
+            $id = $this->db->insert_id();
+            $pro_img = array();
+            $this->load->library('image_lib');
+            ini_set("memory_limit", "-1");
+            foreach ($_FILES['nimg']['name'] as $i => $row) {
+                if ($_FILES['nimg']['name'][$i] !== '') {
+                    $ib = $i + 1;
+                    $path = $_FILES['nimg']['name'][$i];
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    $img = 'photo_' . $id . '_' . $ib . '.' . $ext;
+                    $img_thumb = 'photo_' . $id . '_' . $ib . '_thumb.' . $ext;
+                    $pro_img[] = array('index' => $i, 'img' => $img, 'thumb' => $img_thumb);
+                    move_uploaded_file($_FILES['nimg']['tmp_name'][$i], 'uploads/photo_image/' . $img);
+
+                    $config1['image_library'] = 'gd2';
+                    $config1['create_thumb'] = TRUE;
+                    $config1['maintain_ratio'] = TRUE;
+                    $config1['width'] = '400';
+                    $config1['height'] = '400';
+                    $config1['source_image'] = 'uploads/photo_image/' . $img;
+
+                    $this->image_lib->initialize($config1);
+                    $this->image_lib->resize();
+                    $this->image_lib->clear();
+                }
+            }
+            $data1['logo'] = json_encode($pro_img);
+            $this->db->where('id', $id);
+            $this->db->update('partners', $data1);
+     
+        recache();
+        } else {
+            $page_data['page_name'] = "partners";
+            $this->load->view('back/index', $page_data);
+        }
+     }
+
+
+
+     function home_manager($para1='', $para2=''){
+        if (!$this->Crud_model->admin_permission('home_manager')) {
+            redirect(base_url() . 'admin');
+        }
+
+        if($para1 == 'list'){
+            $this->db->order_by('id desc');
+            $page_data['all_categories'] = $this->db->get('home_navs')->result_array();
+            $this->load->view('back/admin/navs_list', $page_data);
+        }else        
+        if($para1=='update'){
+
+            $pro_img = array();
+            $this->load->library('image_lib');
+            ini_set("memory_limit", "-1");
+           
+                    $path = $_FILES['nimg']['name'];
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    $img = $_FILES['nimg']['name'];
+                    $img_thumb = 'photo_' . '_thumb.' . $ext;
+                    $pro_img[] = array('index' => 1, 'img' => $img, 'thumb' => $img_thumb);
+                    move_uploaded_file($_FILES['nimg']['tmp_name'], 'uploads/logo_image/' . $img);
+
+                    $config1['image_library'] = 'gd2';
+                    $config1['create_thumb'] = TRUE;
+                    $config1['maintain_ratio'] = TRUE;
+                    $config1['width'] = '400';
+                    $config1['height'] = '400';
+                    $config1['source_image'] = 'uploads/logo_image/' . $img;
+
+                    $this->image_lib->initialize($config1);
+                    $this->image_lib->resize();
+                    $this->image_lib->clear();
+               
+            $data['logo'] = $img;
+            $data['logo_title'] = $this->input->post('logo_title');
+            $data['status'] = 1;
+
+            $get_status = $this->db->get_where('home_logo', ['status' => '1']);
+
+            if($get_status->row() == []){
+                $this->db->insert('home_logo', $data);
+            }else{
+                $this->db->where('status', '1')->update('home_logo', $data);
+            }
+
+            echo json_encode($_FILES['nimg']);
+           recache();
+
+        }else
+        if($para1=='manage_logo'){
+            $current_logo = $this->db->get('home_logo')->result_array();
+            $page_data['logo'] = $current_logo;
+            $page_data['page_name'] = 'manage_logo';
+
+            $this->load->view('back/index', $page_data);
+        }else if($para1=='update_logo'){
+            $this->load->view('back/admin/update_logo');
+        }else if($para1=='nav_add'){
+            $where = "id <> '5' AND id <> '6'";
+            $navs = $this->db->where($where)->get('home_navs')->result_array();
+            if($navs != []){ $data['navs'] = $navs; }else{ $data['navs'] = ''; }
+            $this->load->view('back/admin/nav_add', $data);
+        }else if($para1=='add_nav'){
+            $data['nav_name'] = $this->input->post('nav_name');
+            $data['nav_link'] = $this->input->post('nav_link');
+            $parent_id = $this->input->post('parent');
+
+            if($parent_id == 0){
+                $data['parent'] = 1;
+            }else{
+                $data['child'] = 1;
+            }
+
+            $data['parent_id'] = $parent_id;
+
+            $data['created_by'] = $this->session->userdata('admin_id');
+
+            $navs = $this->db->insert('home_navs', $data);
+            recache();
+        }
+            
+     }
+
 }
-
-
-
-
-

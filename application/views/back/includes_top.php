@@ -95,7 +95,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <?php $ext = $this->db->get_where('ui_settings', array('type' => 'fav_ext'))->row()->value; ?>
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>uploads/others/favicon.<?php echo $ext; ?>">
+    <link rel="shortcut icon" href="<?= base_url() . 'uploads/logo_image/cgr.png'  ?>">
     <script>
         function sound(type) {}
 

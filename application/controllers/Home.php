@@ -34,35 +34,81 @@ class Home extends CI_Controller {
     }
 
     public function index() {
-        $page_data['asset_page'] = 'home';
-        // $page_data['page_name'] = 'home/home-1';
-        $page_data['page_name'] = 'home/home-2';
-        $page_data['page_title'] = translate('home');
-        $page_data['page_meta'] = $this->get_page_meta();
-        // $this->load->view('front/index', $page_data);
-        $this->load->view('front/index-2', $page_data);
-
-        
+        $this->load->view('cgfront/index');
     }
 
-    function news($para1 = '', $para2 = '', $para3 = '', $para4 = '', $para5 = '') {
-        $page_data['news_category']     = $para1;
-        $page_data['news_sub_category'] = $para2;
-        if (isset($para3)) {
-            $page_data['start_date'] = $para3;
-        }
-        if (isset($para4)) {
-            $page_data['end_date'] = $para4;
-        }
-        if (isset($para5)) {
-            $text = $this->session->flashdata('search_text');
-            $page_data['header_search_text'] = $text;
-        }
-        $page_data['asset_page'] = 'news_list';
-        $page_data['page_name'] = 'news_list';
-        $page_data['page_title'] = translate('news');
-        $this->load->view('front/index', $page_data);
+    public function news(){
+       $this->db->limit(14);
+       $news = $this->db->get('news')->result();
+       $count = count($news);
+
+       $data['count'] = $count;
+       $data['title'] = 'news - chip ganassi';
+       $data['news'] = $news;
+      $this->load->view('cgfront/template/news', $data);
+            
+       //$this->load->view('cgfront/page_template', $page_data);
     }
+
+    public function single_news($id){
+       $news = $this->db->where('news_id', $id)->get('news')->row();
+       $data['news_reporter'] = $this->db->where('news_reporter_id', $news->news_reporter_id)->get('news_reporter')->row();
+       $data['related_news'] = $this->db->where('tag', $news->tag)->limit(4)->get('news')->result();
+       $data['news'] = $news;
+       $data['page'] = 'single_news.php';
+       $data['title'] = $news->title;
+            
+       $this->load->view('cgfront/page_template', $data);
+    }
+
+    public function schedule($id){
+       $race = $this->db->where('race_id', $id)->get('races')->row();
+       $data['race'] = $race;
+       $data['schedule'] = $this->db->query("select * from race_schedule where race_id = '$id'")->result();
+       $data['page'] = 'schedule.php';
+       $data['title'] = $race->name; 
+            
+       $this->load->view('cgfront/page_template', $data);
+    }
+
+    public function history() {
+        $data['title'] = 'About Us';
+        $this->load->view('cgfront/template/history', $data);
+    }
+
+    public function driver_page($id) {
+        $driver = $this->db->get_where('drivers', ['driver_id' => $id])->row();
+        $data['img'] = json_decode($driver->pro_img, true)[0]['img'];
+        $data['driver'] = $driver;
+        $data['partner'] = $this->db->get_where('partners', ['id' => $driver->partner])->row();
+        $data['title'] = driver_name($id);
+        $data['page'] = 'driver.php';
+        $this->load->view('cgfront/page_template', $data);
+    }
+
+    public function contact(){
+        $data['title'] = 'Contact';
+        $this->load->view('cgfront/template/contact', $data);
+    }
+
+    // function news($para1 = '', $para2 = '', $para3 = '', $para4 = '', $para5 = '') {
+    //     $page_data['news_category']     = $para1;
+    //     $page_data['news_sub_category'] = $para2;
+    //     if (isset($para3)) {
+    //         $page_data['start_date'] = $para3;
+    //     }
+    //     if (isset($para4)) {
+    //         $page_data['end_date'] = $para4;
+    //     }
+    //     if (isset($para5)) {
+    //         $text = $this->session->flashdata('search_text');
+    //         $page_data['header_search_text'] = $text;
+    //     }
+    //     $page_data['asset_page'] = 'news_list';
+    //     $page_data['page_name'] = 'news_list';
+    //     $page_data['page_title'] = translate('news');
+    //     $this->load->view('front/index', $page_data);
+    // }
 
     function set_intro($para1 = '', $para2 = '') {
         $page_data['news_category'] = $para1;
@@ -1230,68 +1276,68 @@ function archive_ajax_news_list($para1 = '') {
         $this->load->view('front/index', $page_data);
     }
 
-    function contact($para1 = '', $para2 = '') {
-        if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {
-            $this->load->library('recaptcha');
-        }
-        $this->load->library('form_validation');
-        if ($para1 == 'send') {
-            $safe = 'yes';
-            $char = '';
-            foreach ($_POST as $row) {
-                if (preg_match('/[\'^":()}{#~><>|=+¬]/', $row, $match)) {
-                    $safe = 'no';
-                    $char = $match[0];
-                }
-            }
-            $this->form_validation->set_rules('name', 'Name', 'required');
-            $this->form_validation->set_rules('subject', 'Subject', 'required');
-            $this->form_validation->set_rules('message', 'Message', 'required');
-            $this->form_validation->set_rules('email', 'Email', 'required');
+    // function contact($para1 = '', $para2 = '') {
+    //     if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {
+    //         $this->load->library('recaptcha');
+    //     }
+    //     $this->load->library('form_validation');
+    //     if ($para1 == 'send') {
+    //         $safe = 'yes';
+    //         $char = '';
+    //         foreach ($_POST as $row) {
+    //             if (preg_match('/[\'^":()}{#~><>|=+¬]/', $row, $match)) {
+    //                 $safe = 'no';
+    //                 $char = $match[0];
+    //             }
+    //         }
+    //         $this->form_validation->set_rules('name', 'Name', 'required');
+    //         $this->form_validation->set_rules('subject', 'Subject', 'required');
+    //         $this->form_validation->set_rules('message', 'Message', 'required');
+    //         $this->form_validation->set_rules('email', 'Email', 'required');
 
-            if ($this->form_validation->run() == FALSE) {
-                echo validation_errors();
-            } else {
-                if ($safe == 'yes') {
-                    if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {
-                        $captcha_answer = $this->input->post('g-recaptcha-response');
-                        $response = $this->recaptcha->verifyResponse($captcha_answer);
-                        if ($response['success']) {
-                            $data['name'] = $this->input->post('name', true);
-                            $data['subject'] = $this->input->post('subject');
-                            $data['email'] = $this->input->post('email');
-                            $data['message'] = $this->security->xss_clean(($this->input->post('message')));
-                            $data['view'] = 'no';
-                            $data['timestamp'] = time();
-                            $this->db->insert('contact_message', $data);
-                            echo 'sent';
-                        } else {
-                            echo 'captcha_incorrect';
-                        }
-                    } else {
-                        $data['name'] = $this->input->post('name', true);
-                        $data['subject'] = $this->input->post('subject');
-                        $data['email'] = $this->input->post('email');
-                        $data['message'] = $this->security->xss_clean(($this->input->post('message')));
-                        $data['view'] = 'no';
-                        $data['timestamp'] = time();
-                        $this->db->insert('contact_message', $data);
-                        echo 'sent';
-                    }
-                } else {
-                    echo 'Disallowed charecter : " ' . $char . ' " in the POST';
-                }
-            }
-        } else {
-            if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {
-                $page_data['recaptcha_html'] = $this->recaptcha->render();
-            }
-            $page_data['asset_page'] = 'contact';
-            $page_data['page_name'] = 'contact';
-            $page_data['page_title'] = translate('contact');
-            $this->load->view('front/index', $page_data);
-        }
-    }
+    //         if ($this->form_validation->run() == FALSE) {
+    //             echo validation_errors();
+    //         } else {
+    //             if ($safe == 'yes') {
+    //                 if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {
+    //                     $captcha_answer = $this->input->post('g-recaptcha-response');
+    //                     $response = $this->recaptcha->verifyResponse($captcha_answer);
+    //                     if ($response['success']) {
+    //                         $data['name'] = $this->input->post('name', true);
+    //                         $data['subject'] = $this->input->post('subject');
+    //                         $data['email'] = $this->input->post('email');
+    //                         $data['message'] = $this->security->xss_clean(($this->input->post('message')));
+    //                         $data['view'] = 'no';
+    //                         $data['timestamp'] = time();
+    //                         $this->db->insert('contact_message', $data);
+    //                         echo 'sent';
+    //                     } else {
+    //                         echo 'captcha_incorrect';
+    //                     }
+    //                 } else {
+    //                     $data['name'] = $this->input->post('name', true);
+    //                     $data['subject'] = $this->input->post('subject');
+    //                     $data['email'] = $this->input->post('email');
+    //                     $data['message'] = $this->security->xss_clean(($this->input->post('message')));
+    //                     $data['view'] = 'no';
+    //                     $data['timestamp'] = time();
+    //                     $this->db->insert('contact_message', $data);
+    //                     echo 'sent';
+    //                 }
+    //             } else {
+    //                 echo 'Disallowed charecter : " ' . $char . ' " in the POST';
+    //             }
+    //         }
+    //     } else {
+    //         if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {
+    //             $page_data['recaptcha_html'] = $this->recaptcha->render();
+    //         }
+    //         $page_data['asset_page'] = 'contact';
+    //         $page_data['page_name'] = 'contact';
+    //         $page_data['page_title'] = translate('contact');
+    //         $this->load->view('front/index', $page_data);
+    //     }
+    // }
 
     function blog($para1 = '', $para2 = '') {
         if ($this->Crud_model->get_settings_value('third_party_settings', 'captcha_status', 'value') == 'ok') {

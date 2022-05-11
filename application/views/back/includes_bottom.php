@@ -132,7 +132,28 @@
         new Switchery(document.getElementById(id), {color: 'rgb(100, 189, 99)', secondaryColor: '#cc2424', jackSecondaryColor: '#c8ff77'});
     });
   
-    
+    function getVenue(event){
+        let id = event.target.value;
+        if(id != ''){
+            let url = "<?= base_url() . 'admin/venueByRace/' ?>" + id;
+
+        $.get(url, function(data){ $("#venue_id").html(data)}, 'html');
+        }else{
+            $("#venue_id").html("");
+        }
+    }
+
+    function getDrivers(event){
+        let id = event.target.value;
+        
+        if(id != ""){
+            let url = "<?= base_url() . 'admin/driverByVenue/' ?>" + id;
+
+            $.get(url, function(data){ $('#driver_points').html(data)}, 'html');
+        }else{
+            $('#driver_points').html("");
+        }
+    }
 
 
 </script>

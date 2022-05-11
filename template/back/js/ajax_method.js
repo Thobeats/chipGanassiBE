@@ -452,13 +452,22 @@ function form_submit(form_id, noty, e) {
                     window.location.replace(base_url+"admin/blog_video");
                 }
                 else if(form_id == 'driver_new'){
-                    window.location.replace(base_url+"admin/drivers");
+                    //window.location.replace(base_url+"admin/drivers");
+
+                    console.log(data);
+                }  
+                
+                else if(form_id == 'partner_new'){
+                    window.location.replace(base_url+"admin/partners");
                 } 
-                else {
+                else if(form_id == 'update_logo'){
+                 window.location.replace(base_url+"admin/home_manager/manage_logo");
+                 //console.log(data);
+                } {
                     ajax_load(base_url + '' + user_type + '/' + module + '/' + list_cont_func + '/' + extra, 'list', 'first');
                 }
 
-                console.log(data);
+                
                 $.activeitNoty({
                     type: 'success',
                     icon: 'fa fa-check',

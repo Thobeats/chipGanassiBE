@@ -159,7 +159,7 @@
 
         <div class="row">
             <div class="col-md-12 col-sm-12">
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-3 col-sm-6" onclick="load_link('<?php echo base_url(); ?>admin/drivers');">
                     <div class="panel panel-dark panel-colorful">
                         <div class="pad-all media">
                             <div class="media-left">
@@ -170,21 +170,75 @@
                             <div class="media-body">
                                 <p class="h3 text-thin media-heading">
                                     <?php
-                                        $total_drivers = $this->db->get('drivers')->num_rows();
-                                       echo $total_drivers;
+                                        $total = $this->db->get('drivers')->num_rows();
+                                        $active = $this->db->get_where('drivers',array('status'=>'active'))->num_rows();
+                                        $inactive = $this->db->get_where('drivers',array('status'=>'inactive'))->num_rows();
+                                        echo $total;
                                     ?>
                                 </p>
                                 <small class="text-uppercase"><?php echo translate('total_no_of_drivers'); ?></small>
                             </div>
                         </div>
 
-                        <!-- <div class="progress progress-xs progress-dark-base mar-no">
-                            <div role="progressbar" aria-valuenow="<?php echo $published; ?>" aria-valuemin="0" aria-valuemax="<?php echo $total; ?>" class="progress-bar progress-bar-light" style="width: 100%"></div>
+                        <div class="progress progress-xs progress-dark-base mar-no">
+                            <div role="progressbar" aria-valuenow="<?php echo $active ?>" aria-valuemin="0" aria-valuemax="<?php echo $total; ?>" class="progress-bar progress-bar-light" style="width: 100%"></div>
                         </div>
 
                         <div class="pad-all text-right panel_button">
-                            <small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> <?php echo $unpublished; ?> </span> <?php echo translate('unpublished_media_uploads'); ?></small>
-                        </div> -->
+                            <small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> <?php echo $inactive; ?> </span> <?php echo translate('inactive_drivers'); ?></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6" onclick="load_link('<?php echo base_url(); ?>admin/races');">
+                    <div class="panel panel-dark panel-colorful">
+                        <div class="pad-all media">
+                            <div class="media-left">
+                                <span class="icon-wrap icon-wrap-xs">
+                                    <i class="fa fa-flag-checkered fa-3x"></i>
+                                </span>
+                            </div>
+                            <div class="media-body">
+                                <p class="h3 text-thin media-heading">
+                                    <?php
+                                        $total = $this->db->get('races')->num_rows();
+                                        $ongoing = $this->db->get_where('races',array('status'=>'1'))->num_rows();
+                                        $completed = $this->db->get_where('races',array('status'=>'0'))->num_rows();
+                                        echo $total;
+                                    ?>
+                                </p>
+                                <small class="text-uppercase"><?php echo translate('total_races'); ?></small>
+                            </div>
+                        </div>
+
+                        <div class="progress progress-xs progress-dark-base mar-no">
+                            <div role="progressbar" aria-valuenow="<?php echo $ongoing ?>" aria-valuemin="0" aria-valuemax="<?php echo $total; ?>" class="progress-bar progress-bar-light" style="width: 100%"></div>
+                        </div>
+
+                        <div class="pad-all text-right panel_button">
+                            <small><span class="text-semibold"><i class="fa fa-unlock-alt fa-fw"></i> <?php echo $completed; ?> </span> <?php echo translate('completed_races'); ?></small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6" onclick="load_link('<?php echo base_url(); ?>admin/race_season');">
+                    <div class="panel panel-dark panel-colorful">
+                        <div class="pad-all media">
+                            <div class="media-left">
+                                <span class="icon-wrap icon-wrap-xs">
+                                    <i class="fa fa-flag-o fa-3x"></i>
+                                </span>
+                            </div>
+                            <div class="media-body">
+                                <p class="h3 text-thin media-heading">
+                                    <?php
+                                       echo $this->session->userdata('season');
+                                    ?>
+                                </p>
+                                <small class="text-uppercase"><?php echo translate('active_season'); ?></small>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

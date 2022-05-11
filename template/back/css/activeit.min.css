@@ -1734,7 +1734,7 @@ mark,.mark {
 }
 .list-header {
 	font-weight:300;
-	padding:10px 15px;
+	/* padding:10px 15px; */
 	position:relative
 }
 .list-item-sm {

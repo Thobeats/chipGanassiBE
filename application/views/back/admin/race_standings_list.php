@@ -4,6 +4,7 @@
         <thead>
             <tr>
                 <th data-align="center"><?php echo translate('position'); ?></th>
+                <th data-align="center"><?php echo translate('venue'); ?></th>
                 <th data-align="center"><?php echo translate('driver'); ?></th>
                 <th data-align="center"><?php echo translate('points'); ?></th>
                 <th data-align="center"><?php echo translate('season'); ?></th>
@@ -22,6 +23,9 @@
                 <tr>
                     <td>
                         <?php echo $i; ?>
+                    </td>
+                    <td>
+                    <?php $vid = $row['venue_id']; echo venue_name($vid); ?>
                     </td>
                     <td>
                         <?php $rid = $row['driver']; echo driver_name($rid); ?>

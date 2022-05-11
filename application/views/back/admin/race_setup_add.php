@@ -13,13 +13,24 @@
                 <?php echo translate('race_name'); ?>
             </label>
             <div class="col-sm-6">
-                <select name="race_id" id="demo-hor-1"
+                <select name="race_id" id="race_setup_id" onchange='getVenue(event)'
                        class="form-control required select-box" style="width:100%">
                     <?php 
                         foreach($races as $race):
                     ?>
                         <option value="<?= $race['race_id'] ?>"><?= $race['name'] ?></option>
                     <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="">
+                <?php echo translate('venue'); ?>
+            </label>
+            <div class="col-sm-6">
+                <select name="venue_id" id="venue_id"
+                       class="form-control required select-box" style="width:100%">
+                  
                 </select>
             </div>
         </div>

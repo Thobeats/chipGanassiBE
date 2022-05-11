@@ -101,7 +101,7 @@ if(isset($_SESSION['driver_details'])){
                                         <?php echo translate('sponsor'); ?>
                                     </label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control required" name="sponsor" id="sponsor" value='<?= isset($driver_details) ? $driver_details['sponsor'] : "" ?>'/>
+                                        <input type="text" class="form-control" name="sponsor" id="sponsor" value='<?= isset($driver_details) ? $driver_details['sponsor'] : "" ?>'/>
                                     </div>
                                 </div>
 
@@ -111,7 +111,7 @@ if(isset($_SESSION['driver_details'])){
                                     </label>
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <input type="text" class="form-control required" name="weight" id="weight" value='<?= isset($driver_details) ? $driver_details['weight'] : "" ?>'/>
+                                            <input type="text" class="form-control" name="weight" id="weight" value='<?= isset($driver_details) ? $driver_details['weight'] : "" ?>'/>
                                             <span class="input-group-addon">
                                                 <span>KG</span>
                                             </span>
@@ -125,7 +125,7 @@ if(isset($_SESSION['driver_details'])){
                                     </label>
                                     <div class="col-sm-8">
                                         <div class="input-group">
-                                            <input type="text" class="form-control required" name="height" id="height" value='<?= isset($driver_details) ? $driver_details['height'] : "" ?>'/>
+                                            <input type="text" class="form-control" name="height" id="height" value='<?= isset($driver_details) ? $driver_details['height'] : "" ?>'/>
                                             <span class="input-group-addon">
                                                 <span>FT</span>
                                             </span>
@@ -170,6 +170,20 @@ if(isset($_SESSION['driver_details'])){
                                                 <span class="fa fa-globe"></span>
                                             </span>
                                         </div>                                    
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >
+                                        <?php echo translate('partnerships'); ?>
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <select name="partner" class='form-control'>
+                                            <option value="">Select Partner</option>
+                                            <?php foreach($partners as $partner): ?>
+                                            <option value="<?= $partner['id'] ?>" <?= $partner['id'] == $driver_details['partner'] ? 'selected' : '' ?>><?= $partner['name'] ?></option>
+                                           <?php endforeach; ?>
+                                        </select>                                           
                                     </div>
                                 </div>
 

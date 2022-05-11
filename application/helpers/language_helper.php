@@ -302,5 +302,134 @@
 
 			return $driver->firstname . " " . $driver->lastname;
 		}
+
+		function driver_car($driver_id){
+			$CI=& get_instance();
+			$driver = $CI->db->get_where('drivers',['driver_id' => $driver_id])->row();
+
+			return $driver->car;
+		}
+	}
+
+	if ( ! function_exists('venue_name'))
+	{
+		function venue_name($venue_id){
+			$CI=& get_instance();
+			$v = $CI->db->get_where('race_schedule',['race_schedule_id' => $venue_id])->row();
+
+			return $v->race_venue;
+		}
+	}
+
+	if ( ! function_exists('table_data'))
+	{
+		function table_data($id){
+			$CI=& get_instance();
+			$v = $CI->db->get_where('race_standings',['venue_id' => $id])->result();
+
+			$collect = '';
+
+			if($v != []){
+				foreach($v as $d){
+					$collect .= "
+					<tr>
+						<td scope='row'> <span class='fas fa-user-circle'></span> " . driver_name($d->driver) ."</td>
+						<td>" . ucfirst(driver_car($d->driver))."</td>
+						<td>$d->points</td>
+					</tr>				
+					";
+				}
+			}else{
+				$collect = '<tr><td colspan="2">No data<td></tr>';
+			}
+
+			echo $collect;
+		}
+	}
+
+	function get_children($id){
+		$CI=& get_instance();
+		$children = $CI->db->get_where('home_navs',['parent_id' => $id , 'child' => 1])->result();
+		
+		if($children != []){
+			$template = '
+		<div class="fancy-dropdown-menu">
+        <div class="row pb-4 pt-3">
+        <div class="col-auto">
+		';
+
+		foreach($children as $child){
+			$template .= "
+			<a class=' false fancy-dropdown-item' href='" .base_url() . 'home' . $child->nav_link ."'>$child->nav_name</a>		
+			";
+		}
+
+
+		$template .= '
+		</div></div></div>
+		';
+
+
+
+		return $template;
+		}else{
+			if($id == 5){
+
+				$children = $CI->db->get('drivers')->result();
+		
+				if($children != []){
+					$template = '
+					<div class="fancy-dropdown-menu">
+					<div class="row pb-4 pt-3">
+					<div class="col-auto">
+					';
+
+					foreach($children as $child){
+						$template .= "
+						<a class=' false fancy-dropdown-item' href='" .base_url() . 'home/driver_page/' .$child->driver_id ."'>$child->firstname $child->lastname</a>		
+						";
+					}
+
+
+					$template .= '
+					</div></div></div>
+					';
+					return $template;
+				}else{
+					return "";
+				}
+
+
+			}else if($id == 6){
+				$children = $CI->db->get('races')->result();
+		
+				if($children != []){
+					$template = '
+					<div class="fancy-dropdown-menu">
+					<div class="row pb-4 pt-3">
+					<div class="col-auto">
+					';
+
+					foreach($children as $child){
+						$template .= "
+						<a class=' false fancy-dropdown-item' href='" .base_url() . 'home/schedule/' .$child->race_id ."'>$child->name</a>		
+						";
+					}
+
+
+					$template .= '
+					</div></div></div>
+					';
+					return $template;
+				}else{
+					return "";
+				}
+			}else{
+				return "";
+			}
+		}
+		
+		
+		
 	}
 

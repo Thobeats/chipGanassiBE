@@ -25,6 +25,14 @@
         </div>
         <div class="form-group">
             <label class="col-sm-4 control-label" for="demo-hor-1">
+                <?php echo translate('race_venue'); ?>
+            </label>
+            <div class="col-sm-6">
+                <input type='text' name='venue' class='form-control'>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-4 control-label" for="demo-hor-1">
                 <?php echo translate('from'); ?>
             </label>
             <div class="col-sm-6">

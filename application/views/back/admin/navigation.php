@@ -16,6 +16,64 @@
                                 </span>
                             </a>
                         </li>
+
+                        <!-- Manage Home Starts -->
+                        <?php
+                            if ($this->Crud_model->admin_permission('home_manager')
+                                    ){
+                                ?>
+                                <li <?php
+                                        if ($page_name == "home_manager") {
+                                    ?>
+                                        class="active-sub"
+                                    <?php } ?> >
+                                    <a href="#">
+                                        <i class="fa fa-car"></i>
+                                        <span class="menu-title">
+                                            <?php echo translate('home_manager'); ?>
+                                        </span>
+                                        <i class="fa arrow"></i>
+                                    </a>
+                                    <ul class="collapse <?php
+                                    if ($page_name == "manage_logo") {
+                                        ?>
+                                            in
+                                        <?php } ?>" >
+
+                                        <?php
+                                            if($this->Crud_model->admin_permission('home_manager')) {
+                                        ?>
+                                            <li <?php if ($page_name == "manage_logo") { ?> class="active-link" <?php } ?> >
+                                                <a href="<?php echo base_url(); ?>admin/home_manager/manage_logo">
+                                                    <i class="fa fa-circle fs_i"></i>
+                                                    <?php echo translate('logo') . " and " . translate('navs'); ?>
+                                                </a>
+                                            </li>
+                                        <?php
+                                            }
+                                        ?>      
+                                        
+                                        <!-- <?php
+                                            if($this->Crud_model->admin_permission('home_manager')) {
+                                        ?>
+                                                    <li <?php if ($page_name == "welcome_video") { ?> class="active-link" <?php } ?> >
+                                                        <a href="<?php echo base_url(); ?>admin/home_manager/welcome_video">
+                                                            <i class="fa fa-circle fs_i"></i>
+                                                            <?php echo translate('welcome_video'); ?>
+                                                        </a>
+                                                    </li>
+                                        <?php
+                                            }
+                                        ?>     -->
+                                    </ul>
+                                </li>
+
+                                <?php
+                            }
+                        ?>
+
+                        <!-- Manage Home Ends -->
+
                         <!-- Manage News Starts -->
                         <?php
                             if ($this->Crud_model->admin_permission('news_category') ||
@@ -371,7 +429,7 @@
                                     <a href="#">
                                         <i class="fa fa-car"></i>
                                         <span class="menu-title">
-                                            <?php echo translate('drivers'); ?>
+                                            <?php echo translate('drivers_and_partners'); ?>
                                         </span>
                                         <i class="fa arrow"></i>
                                     </a>
@@ -400,8 +458,17 @@
                                                         </a>
                                                     </li>
                                         <?php
+                                            }if($this->Crud_model->admin_permission('drivers')) {
+                                                ?>
+                                                <li <?php if ($page_name == "driver_new") { ?> class="active-link" <?php } ?> >
+                                                    <a href="<?php echo base_url(); ?>admin/partners">
+                                                        <i class="fa fa-circle fs_i"></i>
+                                                        <?php echo translate('partners'); ?>
+                                                    </a>
+                                                </li>
+                                        <?php
                                             }
-                                        ?>                                        
+                                        ?>                                      
                                     </ul>
                                 </li>
 

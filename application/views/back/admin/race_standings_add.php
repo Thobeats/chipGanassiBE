@@ -1,6 +1,23 @@
+
+<div class="row">
+    <div class="col-md-8"></div>
+    <div class="col-md-4">
+        <div class="text-right">
+            <select name="race_id" id="race_setup_id" onchange='getDrivers(event)'
+                    class="form-control required select-box" style="width:100%">
+                    <option value=""></option>
+                <?php 
+                    foreach($venues as $venue):
+                ?>
+                    <option value="<?= $venue['venue_id'] ?>"><?php $vid = $venue['venue_id']; echo venue_name($vid); ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
 <div>
     <?php
-    echo form_open(base_url() . 'admin/race_standings/update/', array(
+    echo form_open(base_url() . 'admin/race_standings/update/'. $race_id, array(
         'class' => 'form-horizontal',
         'method' => 'post',
         'id' => 'race_standings_add',
@@ -8,21 +25,9 @@
     ));
     ?>
     <div class="panel-body">
-        <input type="hidden" name="race_id" value="<?= $race_id ?>">
-        <?php 
-            foreach($drivers as $driver):
-        ?>
-        <input type="hidden" name="race_stand_id[]" value="<?= $driver['race_stand_id'] ?>">
-        <div class="form-group">
-            <label class="col-sm-4 control-label" for="demo-hor-1">
-                <?php echo driver_name($driver['driver']) ?>
-                <input type="hidden" name="driver_id[]" value="<?= $driver['driver']?>">
-            </label>
-            <div class="col-sm-6">
-                <input type="text" placeholder="Enter Points" name="points[]" class="form-control required" value="<?= $driver['points'] ?>"> 
-            </div>
+        <div id="driver_points">
+            
         </div>
-        <?php endforeach; ?>
     </div>
 </form>
 </div>
